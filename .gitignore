@@ -368,3 +368,6 @@ RentACar.Infrastructure/obj/Debug
 RentACar.Api/bin
 RentACar.Api/appsettings.json
 RentACar.Api/obj
+RentACar.Infrastructure/obj
+RentACar.UnitTest/obj
+RentACar.Core/obj
