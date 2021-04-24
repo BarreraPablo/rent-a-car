@@ -51,6 +51,7 @@ namespace RentACar.Api
                 options.UseSqlServer(Configuration.GetConnectionString("RentACar"))
             );
 
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddMvc(options =>
             {
                 options.Filters.Add<ValidationFilter>();
