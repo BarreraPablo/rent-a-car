@@ -8,7 +8,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using RentACar.Core.Interfaces;
 using RentACar.Infrastructure.Data;
+using RentACar.Infrastructure.Filters;
+using RentACar.Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,9 +33,14 @@ namespace RentACar.Api
         {
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            services.AddControllers().AddNewtonsoftJson(options =>
+            services.AddControllers(options => {
+                options.Filters.Add<GlobalExceptionFilter>();
+            }).AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-            );
+            ).ConfigureApiBehaviorOptions(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
 
             services.AddSwaggerGen(c =>
             {
@@ -42,6 +50,11 @@ namespace RentACar.Api
             services.AddDbContext<RentACarContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("RentACar"))
             );
+
+            services.AddMvc(options =>
+            {
+                options.Filters.Add<ValidationFilter>();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
