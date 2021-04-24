@@ -56,8 +56,6 @@ namespace RentACar.Infrastructure.Data
             {
                 entity.ToTable("Brand");
 
-                entity.Property(e => e.BrandId).ValueGeneratedNever();
-
                 entity.Property(e => e.CreatedAt).HasColumnType("datetime");
 
                 entity.Property(e => e.Description)
@@ -171,8 +169,6 @@ namespace RentACar.Infrastructure.Data
             modelBuilder.Entity<DocumentType>(entity =>
             {
                 entity.ToTable("DocumentType");
-
-                entity.Property(e => e.DocumentTypeId).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.CreatedAt).HasColumnType("datetime");
 
