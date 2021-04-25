@@ -20,6 +20,7 @@ using RentACar.Infrastructure.Repositories;
 using RentACar.Infrastructure.Services;
 using System;
 using System.Collections.Generic;
+using RentACar.Infrastructure.Extensions;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -51,24 +52,12 @@ namespace RentACar.Api
                 options.SuppressModelStateInvalidFilter = true;
             });
 
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "RentACar.Api", Version = "v1" });
+            services.AddSwagger($"{Assembly.GetExecutingAssembly().GetName().Name}.xml");
 
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                c.IncludeXmlComments(xmlPath);
-            });
+            services.AddOptions(Configuration);
+            services.AddDbContexts(Configuration);
 
-            services.Configure<PasswordOptions>(Configuration.GetSection("PasswordOptions"));
-
-            services.AddDbContext<RentACarContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("RentACar"))
-            );
-
-            services.AddScoped<IUserService, UserService>();
-            services.AddTransient<IUnitOfWork, UnitOfWork>();
-            services.AddSingleton<IPasswordService, PasswordService>();
+            services.AddServices();
 
             services.AddAuthentication(options =>
             {
