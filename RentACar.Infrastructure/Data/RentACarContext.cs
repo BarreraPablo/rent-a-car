@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using RentACar.Core.Entities;
+using RentACar.Core.Enumerations;
 
 #nullable disable
 
@@ -285,10 +286,23 @@ namespace RentACar.Infrastructure.Data
 
                 entity.Property(e => e.CreatedAt).HasColumnType("datetime");
 
+                entity.Property(e => e.Username)
+                    .IsRequired()
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.EmailAddress)
                     .IsRequired()
                     .HasMaxLength(100)
                     .IsUnicode(false);
+
+                entity.Property(e => e.Role)
+                    .IsRequired()
+                    .HasMaxLength(15)
+                    .HasConversion(
+                    x => x.ToString(),
+                    x => (RoleType)Enum.Parse(typeof(RoleType), x)
+                    );
 
                 entity.Property(e => e.ModifiedAt).HasColumnType("datetime");
 

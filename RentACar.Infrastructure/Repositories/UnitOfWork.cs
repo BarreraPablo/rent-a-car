@@ -13,11 +13,15 @@ namespace RentACar.Infrastructure.Repositories
         private readonly RentACarContext db;
         //IBrandRepository _brandRepository { get; }
 
+        IUserRepository _userRepository { get; }
+
         public UnitOfWork(RentACarContext db)
         {
             this.db = db;
         }
         //public IBrandRepository BrandRepository => _brandRepository ?? new BrandRepository(db);
+
+        public IUserRepository UserRepository => _userRepository ?? new UserRepository(db);
 
         public void SaveChanges()
         {

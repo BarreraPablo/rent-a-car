@@ -61,6 +61,7 @@ namespace RentACar.Api
                 options.UseSqlServer(Configuration.GetConnectionString("RentACar"))
             );
 
+            services.AddScoped<IUserService, UserService>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             services.AddAuthentication(options =>

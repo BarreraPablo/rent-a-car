@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace RentACar.Core.Interfaces
 {
     public interface IUnitOfWork
     {
         //IBrandRepository BrandRepository { get; }
+
+        IUserRepository UserRepository { get; }
 
         void Dispose();
 

@@ -4,9 +4,4 @@
     <TargetFramework>netcoreapp5.0</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Enumerations\" />
-    <Folder Include="Exceptions\" />
-  </ItemGroup>
-
 </Project>
