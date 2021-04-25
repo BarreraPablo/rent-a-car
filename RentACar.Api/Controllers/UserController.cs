@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using RentACar.Core.DTOs.UserDTOs;
 using RentACar.Core.Entities;
 using RentACar.Core.Interfaces;
+using RentACar.Infrastructure.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,11 +19,13 @@ namespace RentACar.Api.Controllers
     {
         private readonly IUserService userService;
         private readonly IMapper mapper;
+        private readonly IPasswordService passwordService;
 
-        public UserController(IMapper mapper, IUserService userService)
+        public UserController(IMapper mapper, IUserService userService, IPasswordService passwordService)
         {
             this.userService = userService;
             this.mapper = mapper;
+            this.passwordService = passwordService;
         }
 
         [HttpPost]
@@ -30,9 +33,11 @@ namespace RentACar.Api.Controllers
         {
             var user = mapper.Map<User>(userCreateDto);
 
+            user.Password = passwordService.Hash(user.Password);
+
             await userService.RegisterUser(user);
 
-            return Ok();
+            return NoContent();
         }
 
     }

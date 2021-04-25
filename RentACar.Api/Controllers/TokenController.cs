@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using RentACar.Core.Entities;
 using RentACar.Core.Interfaces;
+using RentACar.Infrastructure.Interfaces;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -17,11 +18,13 @@ namespace RentACar.Api.Controllers
     {
         private readonly IConfiguration Configuration;
         private readonly IUserService userService;
+        private readonly IPasswordService passwordService;
 
-        public TokenController(IConfiguration configuration, IUserService userService)
+        public TokenController(IConfiguration configuration, IUserService userService, IPasswordService passwordHasher)
         {
             this.Configuration = configuration;
             this.userService = userService;
+            this.passwordService = passwordHasher;
         }
 
 
@@ -41,8 +44,10 @@ namespace RentACar.Api.Controllers
 
         private async Task<(bool, User)> IsValidUser(UserLogin login)
         {
-            var user = await userService.GetLoginByCredentials(login);
-            return (user != null, user);
+            var user = await userService.GetByUsername(login);
+            var isValid = passwordService.Check(user.Password, login.Password);
+
+            return (isValid, user);
         }
 
         private string GenerateToken(User user)

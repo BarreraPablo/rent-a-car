@@ -5,7 +5,7 @@ namespace RentACar.Core.Interfaces
 {
     public interface IUserService
     {
-        Task<User> GetLoginByCredentials(UserLogin userLogin);
+        Task<User> GetByUsername(UserLogin userLogin);
         Task RegisterUser(User user);
     }
 }

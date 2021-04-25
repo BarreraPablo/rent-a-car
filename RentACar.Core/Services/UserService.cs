@@ -13,7 +13,7 @@ namespace RentACar.Core.Services
             this.unitOfWork = unitOfWork;
         }
 
-        public async Task<User> GetLoginByCredentials(UserLogin userLogin)
+        public async Task<User> GetByUsername(UserLogin userLogin)
         {
             return await unitOfWork.UserRepository.GetByUsername(userLogin.Username);
         }
