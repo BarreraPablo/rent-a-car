@@ -11,6 +11,7 @@ namespace RentACar.Core.Interfaces
     {
         public Task<User> GetById(long id);
 
+        public Task<User> GetByEmail(string email);
         public Task<User> GetByUsername(string username);
 
         public Task Add(User user);

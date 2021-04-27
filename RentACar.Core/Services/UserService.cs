@@ -1,4 +1,5 @@
 ﻿using RentACar.Core.Entities;
+using RentACar.Core.Exceptions;
 using RentACar.Core.Interfaces;
 using System.Threading.Tasks;
 
@@ -20,6 +21,20 @@ namespace RentACar.Core.Services
 
         public async Task RegisterUser(User user)
         {
+            var validateUser = await unitOfWork.UserRepository.GetByUsername(user.Username);
+
+            if(validateUser != null)
+            {
+                throw new BussinessException("The username is already taken");
+            }
+
+            validateUser = await unitOfWork.UserRepository.GetByEmail(user.EmailAddress);
+
+            if(validateUser != null)
+            {
+                throw new BussinessException("There is already an account with this email address");
+            }
+
             await unitOfWork.UserRepository.Add(user);
             await unitOfWork.SaveChangesAsync();
         }
