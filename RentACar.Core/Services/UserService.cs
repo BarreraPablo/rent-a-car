@@ -16,11 +16,21 @@ namespace RentACar.Core.Services
 
         public async Task<User> GetByUsername(UserLogin userLogin)
         {
+            if(userLogin == null)
+            {
+                throw new ArgumentNotDefinedException();
+            }
+
             return await unitOfWork.UserRepository.GetByUsername(userLogin.Username);
         }
 
         public async Task RegisterUser(User user)
         {
+            if(user == null)
+            {
+                throw new ArgumentNotDefinedException();
+            }
+
             var validateUser = await unitOfWork.UserRepository.GetByUsername(user.Username);
 
             if(validateUser != null)

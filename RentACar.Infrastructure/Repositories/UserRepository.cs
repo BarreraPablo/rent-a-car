@@ -21,6 +21,11 @@ namespace RentACar.Infrastructure.Repositories
         }
         public async Task Add(User user)
         {
+            if(user == null)
+            {
+                throw new ArgumentNotDefinedException();
+            }
+
             user.CreatedAt = DateTime.Now;
             await context.AddAsync(user);
         }
@@ -32,7 +37,7 @@ namespace RentACar.Infrastructure.Repositories
                 throw new ArgumentNotDefinedException();
             }
 
-            return await context.Users.Where(u => u.Username == username).FirstOrDefaultAsync();
+            return await context.Users.FirstOrDefaultAsync(u => u.Username == username);
         }
 
         public async Task<User> GetByEmail(string email)
@@ -42,17 +47,22 @@ namespace RentACar.Infrastructure.Repositories
                 throw new ArgumentNotDefinedException();
             }
 
-            return await context.Users.Where(u => u.EmailAddress == email).FirstOrDefaultAsync();
+            return await context.Users.FirstOrDefaultAsync(u => u.EmailAddress == email);
         }
 
         public async Task<User> GetById(long id)
         {
-            return await context.Users.Where(u => u.UserId == id).FirstOrDefaultAsync();
+            return await context.Users.FirstOrDefaultAsync(u => u.UserId == id);
         }
 
-        public void Update(User user)
+        public async Task Update(User user)
         {
-            throw new NotImplementedException();
+            if (user == null)
+            {
+                throw new ArgumentNotDefinedException();
+            }
+            user.ModifiedAt = DateTime.Now;
+
         }
     }
 }

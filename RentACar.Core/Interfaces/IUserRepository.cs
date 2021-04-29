@@ -16,7 +16,7 @@ namespace RentACar.Core.Interfaces
 
         public Task Add(User user);
 
-        public void Update(User user);
+        public Task Update(User user);
 
     }
 }

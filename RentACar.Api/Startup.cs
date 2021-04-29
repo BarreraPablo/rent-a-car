@@ -1,31 +1,15 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
-using RentACar.Core.Interfaces;
-using RentACar.Core.Services;
-using RentACar.Infrastructure.Data;
-using RentACar.Infrastructure.Filters;
-using RentACar.Infrastructure.Interfaces;
-using RentACar.Infrastructure.Options;
-using RentACar.Infrastructure.Repositories;
-using RentACar.Infrastructure.Services;
-using System;
-using System.Collections.Generic;
 using RentACar.Infrastructure.Extensions;
-using System.IO;
-using System.Linq;
+using RentACar.Infrastructure.Filters;
+using System;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace RentACar.Api
 {

@@ -5,7 +5,7 @@ using RentACar.Core.Entities;
 
 namespace RentACar.Infrastructure.Mappings
 {
-    class AutomapperProfile : Profile
+    public class AutomapperProfile : Profile
     {
         public AutomapperProfile()
         {
