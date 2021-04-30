@@ -5,9 +5,8 @@ using System.Collections.Generic;
 
 namespace RentACar.Core.Entities
 {
-    public partial class Rent
+    public partial class Rent : BaseEntity
     {
-        public long RentId { get; set; }
         public long ClientId { get; set; }
         public long UserId { get; set; }
         public long RentTypeId { get; set; }
@@ -15,9 +14,6 @@ namespace RentACar.Core.Entities
         public DateTime PickUp { get; set; }
         public DateTime PickOff { get; set; }
         public long PaymentId { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime? ModifiedAt { get; set; }
-
         public virtual Client Client { get; set; }
         public virtual Payment Payment { get; set; }
         public virtual RentType RentType { get; set; }

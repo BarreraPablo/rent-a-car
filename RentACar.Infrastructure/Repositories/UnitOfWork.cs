@@ -10,36 +10,36 @@ namespace RentACar.Infrastructure.Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly RentACarContext db;
+        private readonly RentACarContext context;
         //IBrandRepository _brandRepository { get; }
 
         IUserRepository _userRepository { get; }
 
-        public UnitOfWork(RentACarContext db)
+        public UnitOfWork(RentACarContext context)
         {
-            this.db = db;
+            this.context = context;
         }
         //public IBrandRepository BrandRepository => _brandRepository ?? new BrandRepository(db);
 
-        public IUserRepository UserRepository => _userRepository ?? new UserRepository(db);
+        public IUserRepository UserRepository => _userRepository ?? new UserRepository(context);
 
         public void SaveChanges()
         {
-            db.SaveChanges();
+            context.SaveChanges();
         }
 
         public void Dispose()
         {
-            if(db != null)
+            if(context != null)
             {
-                db.Dispose();
+                context.Dispose();
             }
 
         }
 
         public async Task SaveChangesAsync()
         {
-            await db.SaveChangesAsync();
+            await context.SaveChangesAsync();
         }
     }
 }

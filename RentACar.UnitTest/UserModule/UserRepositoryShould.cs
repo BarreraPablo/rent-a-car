@@ -63,14 +63,14 @@ namespace RentACar.UnitTest
                 unitOfWork.SaveChanges();
 
 
-                Assert.Equal(4, user.UserId); // After the insert the entity must have id > 0
+                Assert.Equal(4, user.Id); // After the insert the entity must have id > 0
             }
 
             using (var context = new RentACarContext(ContextOptions))
             {
                 var user = context.Set<User>().FirstOrDefault(u => u.Username == "Test1");
 
-                Assert.Equal(4, user.UserId);
+                Assert.Equal(4, user.Id);
                 Assert.Equal("Test1", user.Username);
                 Assert.Equal("contact@gmail.com", user.EmailAddress);
                 Assert.Equal(RoleType.Administrator, user.Role);
@@ -181,7 +181,7 @@ namespace RentACar.UnitTest
                 var user = await unitOfWork.UserRepository.GetByUsername("Juan");
 
 
-                user.UserId = 1;
+                user.Id = 1;
                 user.Username = "Martin";
                 user.EmailAddress = "contact@gmail.com";
                 user.Role = 0;
@@ -193,9 +193,9 @@ namespace RentACar.UnitTest
 
             using (var context = new RentACarContext(ContextOptions))
             {
-                var user = context.Set<User>().FirstOrDefault(u => u.UserId == 1);
+                var user = context.Set<User>().FirstOrDefault(u => u.Id == 1);
 
-                Assert.Equal(1, user.UserId);
+                Assert.Equal(1, user.Id);
                 Assert.Equal("Martin", user.Username);
                 Assert.Equal("contact@gmail.com", user.EmailAddress);
                 Assert.Equal(RoleType.Administrator, user.Role);

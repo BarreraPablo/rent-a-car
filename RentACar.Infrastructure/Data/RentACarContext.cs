@@ -39,6 +39,8 @@ namespace RentACar.Infrastructure.Data
             {
                 entity.ToTable("BodyType");
 
+                entity.Property(e => e.Id).HasColumnName("BodyTypeId");
+
                 entity.Property(e => e.CreatedAt).HasColumnType("datetime");
 
                 entity.Property(e => e.Description)
@@ -57,6 +59,8 @@ namespace RentACar.Infrastructure.Data
             {
                 entity.ToTable("Brand");
 
+                entity.Property(e => e.Id).HasColumnName("BrandId");
+
                 entity.Property(e => e.CreatedAt).HasColumnType("datetime");
 
                 entity.Property(e => e.Description)
@@ -74,6 +78,8 @@ namespace RentACar.Infrastructure.Data
             modelBuilder.Entity<Car>(entity =>
             {
                 entity.ToTable("Car");
+
+                entity.Property(e => e.Id).HasColumnName("CarId");
 
                 entity.Property(e => e.CreatedAt).HasColumnType("datetime");
 
@@ -104,6 +110,8 @@ namespace RentACar.Infrastructure.Data
             modelBuilder.Entity<Client>(entity =>
             {
                 entity.ToTable("Client");
+
+                entity.Property(e => e.Id).HasColumnName("ClientId");
 
                 entity.Property(e => e.Birthday).HasColumnType("datetime");
 
@@ -158,6 +166,8 @@ namespace RentACar.Infrastructure.Data
             {
                 entity.ToTable("Country");
 
+                entity.Property(e => e.Id).HasColumnName("CountryId");
+
                 entity.Property(e => e.CreatedAt).HasColumnType("datetime");
 
                 entity.Property(e => e.ModifiedAt).HasColumnType("datetime");
@@ -170,6 +180,8 @@ namespace RentACar.Infrastructure.Data
             modelBuilder.Entity<DocumentType>(entity =>
             {
                 entity.ToTable("DocumentType");
+
+                entity.Property(e => e.Id).HasColumnName("DocumentTypeId");
 
                 entity.Property(e => e.CreatedAt).HasColumnType("datetime");
 
@@ -187,6 +199,8 @@ namespace RentACar.Infrastructure.Data
             modelBuilder.Entity<Payment>(entity =>
             {
                 entity.ToTable("Payment");
+
+                entity.Property(e => e.Id).HasColumnName("PaymentId");
 
                 entity.Property(e => e.CreatedAt).HasColumnType("datetime");
 
@@ -225,6 +239,8 @@ namespace RentACar.Infrastructure.Data
             modelBuilder.Entity<Rent>(entity =>
             {
                 entity.ToTable("Rent");
+
+                entity.Property(e => e.Id).HasColumnName("RentId");
 
                 entity.Property(e => e.CreatedAt).HasColumnType("datetime");
 
@@ -265,6 +281,8 @@ namespace RentACar.Infrastructure.Data
             {
                 entity.ToTable("RentType");
 
+                entity.Property(e => e.Id).HasColumnName("RentTypeId");
+
                 entity.Property(e => e.AvailableUntil).HasColumnType("datetime");
 
                 entity.Property(e => e.CreatedAt).HasColumnType("datetime");
@@ -275,7 +293,7 @@ namespace RentACar.Infrastructure.Data
 
                 entity.HasOne(d => d.Car)
                     .WithMany(p => p.RentTypes)
-                    .HasForeignKey(d => d.CarId)
+                    .HasForeignKey(d => d.Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_RentType_Car");
             });
@@ -283,6 +301,8 @@ namespace RentACar.Infrastructure.Data
             modelBuilder.Entity<User>(entity =>
             {
                 entity.ToTable("User");
+
+                entity.Property(e => e.Id).HasColumnName("UserId");
 
                 entity.Property(e => e.CreatedAt).HasColumnType("datetime");
 

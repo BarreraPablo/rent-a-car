@@ -11,24 +11,10 @@ using System.Threading.Tasks;
 
 namespace RentACar.Infrastructure.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : BaseRepository<User>, IUserRepository
     {
-        private readonly RentACarContext context;
 
-        public UserRepository(RentACarContext context)
-        {
-            this.context = context;
-        }
-        public async Task Add(User user)
-        {
-            if(user == null)
-            {
-                throw new ArgumentNotDefinedException();
-            }
-
-            user.CreatedAt = DateTime.Now;
-            await context.AddAsync(user);
-        }
+        public UserRepository(RentACarContext context) : base(context) { }
 
         public async Task<User> GetByUsername(string username)
         {
@@ -37,7 +23,7 @@ namespace RentACar.Infrastructure.Repositories
                 throw new ArgumentNotDefinedException();
             }
 
-            return await context.Users.FirstOrDefaultAsync(u => u.Username == username);
+            return await entities.FirstOrDefaultAsync(u => u.Username == username);
         }
 
         public async Task<User> GetByEmail(string email)
@@ -47,22 +33,8 @@ namespace RentACar.Infrastructure.Repositories
                 throw new ArgumentNotDefinedException();
             }
 
-            return await context.Users.FirstOrDefaultAsync(u => u.EmailAddress == email);
+            return await entities.FirstOrDefaultAsync(u => u.EmailAddress == email);
         }
 
-        public async Task<User> GetById(long id)
-        {
-            return await context.Users.FirstOrDefaultAsync(u => u.UserId == id);
-        }
-
-        public async Task Update(User user)
-        {
-            if (user == null)
-            {
-                throw new ArgumentNotDefinedException();
-            }
-            user.ModifiedAt = DateTime.Now;
-
-        }
     }
 }

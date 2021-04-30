@@ -48,7 +48,7 @@ namespace RentACar.UnitTest
             unitOfWorkMock.Setup(u => u.UserRepository.GetByUsername(It.IsAny<string>())).ReturnsAsync((User)null);
             unitOfWorkMock.Setup(u => u.UserRepository.GetByEmail(It.IsAny<string>())).ReturnsAsync((User)null);
 
-            await userService.RegisterUser(new User() { UserId = 1, Username = "Test", Role = 0, Password = "123" });
+            await userService.RegisterUser(new User() { Id = 1, Username = "Test", Role = 0, Password = "123" });
 
             unitOfWorkMock.Verify(u => u.UserRepository.Add(It.IsAny<User>()), Times.Once);
         }
