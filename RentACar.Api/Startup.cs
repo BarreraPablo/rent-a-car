@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using RentACar.Infrastructure.Extensions;
 using RentACar.Infrastructure.Filters;
+using Serilog;
 using System;
 using System.Reflection;
 using System.Text;
@@ -79,6 +80,8 @@ namespace RentACar.Api
             }
 
             app.UseHttpsRedirection();
+
+            app.UseSerilogRequestLogging();
 
             app.UseRouting();
 
