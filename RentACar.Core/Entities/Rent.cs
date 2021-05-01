@@ -13,10 +13,9 @@ namespace RentACar.Core.Entities
         public decimal Total { get; set; }
         public DateTime PickUp { get; set; }
         public DateTime PickOff { get; set; }
-        public long PaymentId { get; set; }
+        public long PaymentTypeId { get; set; }
         public virtual Client Client { get; set; }
-        public virtual Payment Payment { get; set; }
-        public virtual RentType RentType { get; set; }
+        public virtual PaymentType PaymentType { get; set; }
         public virtual User User { get; set; }
     }
 }

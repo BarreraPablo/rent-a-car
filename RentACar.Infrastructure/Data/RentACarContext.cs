@@ -25,9 +25,8 @@ namespace RentACar.Infrastructure.Data
         public virtual DbSet<Client> Clients { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<DocumentType> DocumentTypes { get; set; }
-        public virtual DbSet<Payment> Payments { get; set; }
+        public virtual DbSet<PaymentType> PaymentType { get; set; }
         public virtual DbSet<Rent> Rents { get; set; }
-        public virtual DbSet<RentType> RentTypes { get; set; }
         public virtual DbSet<User> Users { get; set; }
 
 
@@ -196,7 +195,7 @@ namespace RentACar.Infrastructure.Data
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<Payment>(entity =>
+            modelBuilder.Entity<PaymentType>(entity =>
             {
                 entity.ToTable("Payment");
 
@@ -204,34 +203,14 @@ namespace RentACar.Infrastructure.Data
 
                 entity.Property(e => e.CreatedAt).HasColumnType("datetime");
 
-                entity.Property(e => e.CreditCardExpiration)
-                    .HasMaxLength(5)
-                    .IsUnicode(false)
-                    .IsFixedLength();
-
-                entity.Property(e => e.CreditCardNumber)
-                    .HasMaxLength(16)
-                    .IsUnicode(false)
-                    .IsFixedLength();
-
-                entity.Property(e => e.Date).HasColumnType("datetime");
-
-                entity.Property(e => e.DocumentNumber)
-                    .IsRequired()
-                    .HasMaxLength(10)
-                    .IsUnicode(false)
-                    .IsFixedLength();
-
-                entity.Property(e => e.FullName)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
                 entity.Property(e => e.ModifiedAt).HasColumnType("datetime");
 
-                entity.Property(e => e.Total).HasColumnType("money");
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(15)
+                    .IsUnicode(false);
 
-                entity.Property(e => e.Type)
+                entity.Property(e => e.Description)
                     .HasMaxLength(50)
                     .IsUnicode(false);
             });
@@ -258,44 +237,17 @@ namespace RentACar.Infrastructure.Data
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Rent_Client");
 
-                entity.HasOne(d => d.Payment)
+                entity.HasOne(d => d.PaymentType)
                     .WithMany(p => p.Rents)
-                    .HasForeignKey(d => d.PaymentId)
+                    .HasForeignKey(d => d.PaymentTypeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Rent_Payment");
-
-                entity.HasOne(d => d.RentType)
-                    .WithMany(p => p.Rents)
-                    .HasForeignKey(d => d.RentTypeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Rent_RentType");
+                    .HasConstraintName("FK_Rent_PaymentType");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Rents)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Rent_User");
-            });
-
-            modelBuilder.Entity<RentType>(entity =>
-            {
-                entity.ToTable("RentType");
-
-                entity.Property(e => e.Id).HasColumnName("RentTypeId");
-
-                entity.Property(e => e.AvailableUntil).HasColumnType("datetime");
-
-                entity.Property(e => e.CreatedAt).HasColumnType("datetime");
-
-                entity.Property(e => e.ModifiedAt).HasColumnType("datetime");
-
-                entity.Property(e => e.PricePerDay).HasColumnType("money");
-
-                entity.HasOne(d => d.Car)
-                    .WithMany(p => p.RentTypes)
-                    .HasForeignKey(d => d.Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_RentType_Car");
             });
 
             modelBuilder.Entity<User>(entity =>
