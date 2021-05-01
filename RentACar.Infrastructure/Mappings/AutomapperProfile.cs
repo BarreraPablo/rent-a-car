@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using RentACar.Core.DTOs.BodyTypeDTOs;
+using RentACar.Core.DTOs.DocumentTypeDTOs;
 //using RentACar.Core.DTOs.BrandDTOs;
 using RentACar.Core.DTOs.UserDTOs;
 using RentACar.Core.Entities;
@@ -14,6 +15,8 @@ namespace RentACar.Infrastructure.Mappings
             CreateMap<UserCreateDto, User>().ReverseMap();
             CreateMap<BodyTypeCreateDto, BodyType>().ReverseMap();
             CreateMap<BodyTypeReadDto, BodyType>().ReverseMap();
+            CreateMap<DocumentTypeCreateDto, DocumentType>().ReverseMap();
+            CreateMap<DocumentTypeReadDto, DocumentType>().ReverseMap();
         }
     }
 }

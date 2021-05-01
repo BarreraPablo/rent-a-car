@@ -11,6 +11,7 @@ namespace RentACar.Core.Interfaces
 
         IBodyTypeRepository BodyTypeRepository { get; }
 
+        IDocumentTypeRepository DocumentTypeRepository { get; }
         void Dispose();
 
         void SaveChanges();
