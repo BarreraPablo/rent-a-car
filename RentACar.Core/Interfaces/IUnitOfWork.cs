@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using RentACar.Core.Entities;
+using System.Threading.Tasks;
 
 namespace RentACar.Core.Interfaces
 {
@@ -7,6 +8,8 @@ namespace RentACar.Core.Interfaces
         //IBrandRepository BrandRepository { get; }
 
         IUserRepository UserRepository { get; }
+
+        IBodyTypeRepository BodyTypeRepository { get; }
 
         void Dispose();
 

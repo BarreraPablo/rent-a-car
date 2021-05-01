@@ -52,6 +52,12 @@ namespace RentACar.Infrastructure.Repositories
         public async Task Delete(long id)
         {
             T entity = await GetById(id);
+
+            if(entity == null)
+            {
+                throw new NullEntityException();
+            }
+
             entities.Remove(entity);
         }
 
