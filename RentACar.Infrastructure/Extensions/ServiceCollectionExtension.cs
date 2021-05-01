@@ -45,6 +45,7 @@ namespace RentACar.Infrastructure.Extensions
             services.AddSingleton<IPasswordService, PasswordService>();
             services.AddScoped<IBodyTypeService, BodyTypeService>();
             services.AddScoped<IDocumentTypeService, DocumentTypeService>();
+            services.AddScoped<IBrandService, BrandService>();
 
             return services;
         }

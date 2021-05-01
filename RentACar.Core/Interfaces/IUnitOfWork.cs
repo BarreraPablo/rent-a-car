@@ -5,7 +5,7 @@ namespace RentACar.Core.Interfaces
 {
     public interface IUnitOfWork
     {
-        //IBrandRepository BrandRepository { get; }
+        IBrandRepository BrandRepository { get; }
 
         IUserRepository UserRepository { get; }
 

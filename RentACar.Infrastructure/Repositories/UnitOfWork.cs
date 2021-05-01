@@ -8,6 +8,7 @@ namespace RentACar.Infrastructure.Repositories
     public class UnitOfWork : IUnitOfWork
     {
         private readonly RentACarContext context;
+        private IBrandRepository _brandRepository;
         private IDocumentTypeRepository _documentTypeRepository;
         private IUserRepository _userRepository;
         private IBodyTypeRepository _bodyTypeRepository;
@@ -27,6 +28,18 @@ namespace RentACar.Infrastructure.Repositories
                     _documentTypeRepository = new DocumentTypeRepository(context);
                 }
                 return _documentTypeRepository;
+            }
+        }
+
+        public IBrandRepository BrandRepository
+        {
+            get
+            {
+                if(_brandRepository == null)
+                {
+                    _brandRepository = new BrandRepository(context);
+                }
+                return _brandRepository;
             }
         }
 
