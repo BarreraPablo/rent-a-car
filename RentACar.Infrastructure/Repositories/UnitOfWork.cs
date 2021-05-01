@@ -11,6 +11,7 @@ namespace RentACar.Infrastructure.Repositories
         private IDocumentTypeRepository _documentTypeRepository;
         private IUserRepository _userRepository;
         private IBodyTypeRepository _bodyTypeRepository;
+        private ICarRepository _carRepository;
 
         public UnitOfWork(RentACarContext context)
         {
@@ -49,6 +50,18 @@ namespace RentACar.Infrastructure.Repositories
                     _bodyTypeRepository = new BodyTypeRepository(context);
                 }
                 return _bodyTypeRepository;
+            }
+        }
+
+        public ICarRepository CarRepository
+        {
+            get
+            {
+                if(_carRepository == null)
+                {
+                    _carRepository = new CarRepository(context);
+                }
+                return _carRepository;
             }
         }
 
