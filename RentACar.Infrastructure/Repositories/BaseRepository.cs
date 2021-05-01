@@ -46,7 +46,7 @@ namespace RentACar.Infrastructure.Repositories
             }
 
             entity.ModifiedAt = DateTime.Now;
-            entities.Update(entity);
+            //entities.Update(entity);
         }
 
         public async Task Delete(long id)
