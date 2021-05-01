@@ -1,9 +1,6 @@
-﻿using RentACar.Core.Interfaces;
+﻿using RentACar.Core.Entities;
+using RentACar.Core.Interfaces;
 using RentACar.Infrastructure.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace RentACar.Infrastructure.Repositories
@@ -11,17 +8,37 @@ namespace RentACar.Infrastructure.Repositories
     public class UnitOfWork : IUnitOfWork
     {
         private readonly RentACarContext context;
-        //IBrandRepository _brandRepository { get; }
-
-        IUserRepository _userRepository { get; }
+        private IUserRepository _userRepository;
+        private IBodyTypeRepository _bodyTypeRepository;
 
         public UnitOfWork(RentACarContext context)
         {
             this.context = context;
         }
-        //public IBrandRepository BrandRepository => _brandRepository ?? new BrandRepository(db);
 
-        public IUserRepository UserRepository => _userRepository ?? new UserRepository(context);
+
+        public IUserRepository UserRepository
+        {
+            get
+            {
+                if(_userRepository == null)
+                {
+                    _userRepository = new UserRepository(context);
+                }
+                return _userRepository;
+            }
+        }
+
+        public IBodyTypeRepository BodyTypeRepository {
+            get
+            {
+                if(_bodyTypeRepository == null)
+                {
+                    _bodyTypeRepository = new BodyTypeRepository(context);
+                }
+                return _bodyTypeRepository;
+            }
+        }
 
         public void SaveChanges()
         {
