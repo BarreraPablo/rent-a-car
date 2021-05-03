@@ -87,6 +87,10 @@ namespace RentACar.Infrastructure.Data
                     .HasMaxLength(11)
                     .IsUnicode(false);
 
+                entity.Property(e => e.Image)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Model)
                     .IsRequired()
                     .HasMaxLength(70)

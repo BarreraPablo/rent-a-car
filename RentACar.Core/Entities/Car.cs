@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 #nullable disable
 
@@ -19,7 +18,7 @@ namespace RentACar.Core.Entities
         public string Gearbox { get; set; }
         public int? Year { get; set; }
         public long? BodyTypeId { get; set; }
-        public byte? QuantityAvailable { get; set; }
+        public string Image { get; set; }
         public byte? Seats { get; set; }
         public bool Available { get; set; }
 
