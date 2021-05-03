@@ -82,6 +82,8 @@ namespace RentACar.Api
 
             app.UseHttpsRedirection();
 
+            app.UseStaticFiles();
+
             app.UseSerilogRequestLogging();
 
             app.UseRouting();

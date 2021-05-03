@@ -33,6 +33,7 @@ namespace RentACar.Infrastructure.Extensions
         public static IServiceCollection AddOptions(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<PasswordOptions>(options => configuration.GetSection("PasswordOptions").Bind(options));
+            services.Configure<ImageOptions>(options => configuration.GetSection("ImageOptions").Bind(options));
 
             return services;
         }
@@ -41,7 +42,9 @@ namespace RentACar.Infrastructure.Extensions
         {
             services.AddScoped<IUserService, UserService>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
+            // Services - Singleton
             services.AddSingleton<IPasswordService, PasswordService>();
+            services.AddSingleton<IFileService, FileService>();
             services.AddScoped<IBodyTypeService, BodyTypeService>();
             services.AddScoped<IDocumentTypeService, DocumentTypeService>();
             services.AddScoped<IBrandService, BrandService>();

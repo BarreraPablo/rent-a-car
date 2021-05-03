@@ -32,4 +32,8 @@
     <ProjectReference Include="..\RentACar.Infrastructure\RentACar.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
 </Project>
