@@ -11,7 +11,7 @@ using RentACar.Core.Exceptions;
 
 namespace RentACar.Infrastructure.Repositories
 {
-    public class BaseRepository<T> : IRepository<T> where T : BaseEntity
+    public abstract class BaseRepository<T> where T : BaseEntity
     {
         private readonly RentACarContext db;
         protected DbSet<T> entities;
@@ -20,7 +20,7 @@ namespace RentACar.Infrastructure.Repositories
             this.db = db;
             this.entities = db.Set<T>();
         }
-        public IEnumerable<T> GetAll()
+        public virtual IEnumerable<T> GetAll()
         {
             return entities.AsEnumerable();
         }
@@ -38,15 +38,35 @@ namespace RentACar.Infrastructure.Repositories
             entity.CreatedAt = DateTime.Now;
             entities.Add(entity);
         }
-        public async Task Update(T entity)
+        public async Task CheckAndUpdate(T entity, T entityWithChanges)
+        {
+            if (entity == null || entityWithChanges == null)
+            {
+                throw new ArgumentNotDefinedException();
+            }
+
+            entity.ModifiedAt = DateTime.Now;
+            db.Entry(entity).CurrentValues.SetValues(entityWithChanges);
+            db.Entry(entity).Property(c => c.CreatedAt).IsModified = false;
+        }
+
+        public async Task GetAndUpdate(T entity)
         {
             if (entity == null)
             {
                 throw new ArgumentNotDefinedException();
             }
 
+            var current = await GetById(entity.Id);
+
+            if (current == null)
+            {
+                throw new NullEntityException();
+            }
+
             entity.ModifiedAt = DateTime.Now;
-            //entities.Update(entity);
+            db.Entry(current).CurrentValues.SetValues(entity);
+            db.Entry(current).Property(c => c.CreatedAt).IsModified = false;
         }
 
         public async Task Delete(long id)

@@ -39,17 +39,7 @@ namespace RentACar.Core.Services
                 throw new ArgumentNotDefinedException();
             }
 
-            var existingBrand = await unitOfWork.BrandRepository.GetById(brand.Id);
-
-            if(existingBrand == null)
-            {
-                throw new NullEntityException();
-            }
-
-            existingBrand.Name = brand.Name;
-            existingBrand.Description = brand.Description;
-
-            await unitOfWork.BrandRepository.Update(existingBrand);
+            await unitOfWork.BrandRepository.GetAndUpdate(brand);
             await unitOfWork.SaveChangesAsync();
         }
     }

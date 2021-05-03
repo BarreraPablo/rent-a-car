@@ -41,7 +41,6 @@ namespace RentACar.Infrastructure.Extensions
         {
             services.AddScoped<IUserService, UserService>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
-            services.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
             services.AddSingleton<IPasswordService, PasswordService>();
             services.AddScoped<IBodyTypeService, BodyTypeService>();
             services.AddScoped<IDocumentTypeService, DocumentTypeService>();

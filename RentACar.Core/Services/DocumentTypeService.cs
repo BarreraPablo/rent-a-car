@@ -28,17 +28,8 @@ namespace RentACar.Core.Services
 
         public async Task Update(DocumentType documentType)
         {
-            DocumentType existentDocType = await this.unitOfWork.DocumentTypeRepository.GetById(documentType.Id);
 
-            if(existentDocType == null)
-            {
-                throw new NullEntityException();
-            }
-
-            existentDocType.Name = documentType.Name;
-            existentDocType.Description = documentType.Description;
-
-            await this.unitOfWork.DocumentTypeRepository.Update(existentDocType);
+            await this.unitOfWork.DocumentTypeRepository.GetAndUpdate(documentType);
             await this.unitOfWork.SaveChangesAsync();
         }
     }

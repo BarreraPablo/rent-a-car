@@ -18,18 +18,8 @@ namespace RentACar.Core.Services
         public IEnumerable<BodyType> GetAll() => unitOfWork.BodyTypeRepository.GetAll();
         public async Task Update(BodyType bodyType)
         {
-            var existingBodyType = await unitOfWork.BodyTypeRepository.GetById(bodyType.Id);
 
-            if (existingBodyType == null)
-            {
-                throw new NullEntityException();
-            }
-
-            existingBodyType.Name = bodyType.Name;
-            existingBodyType.Description = bodyType.Description;
-
-
-            await unitOfWork.BodyTypeRepository.Update(existingBodyType);
+            await unitOfWork.BodyTypeRepository.GetAndUpdate(bodyType);
             unitOfWork.SaveChanges();
         }
 

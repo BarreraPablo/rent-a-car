@@ -187,7 +187,7 @@ namespace RentACar.UnitTest
                 user.Role = 0;
                 user.Password = "secret";
 
-                await unitOfWork.UserRepository.Update(user);
+                await unitOfWork.UserRepository.GetAndUpdate(user);
                 unitOfWork.SaveChanges();
             }
 
