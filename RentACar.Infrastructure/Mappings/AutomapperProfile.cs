@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using RentACar.Core.DTOs.BodyTypeDTOs;
 using RentACar.Core.DTOs.BrandDTOs;
+using RentACar.Core.DTOs.CarDTOs;
 using RentACar.Core.DTOs.DocumentTypeDTOs;
 //using RentACar.Core.DTOs.BrandDTOs;
 using RentACar.Core.DTOs.UserDTOs;
@@ -19,6 +20,9 @@ namespace RentACar.Infrastructure.Mappings
             CreateMap<BodyTypeReadDto, BodyType>().ReverseMap();
             CreateMap<DocumentTypeCreateDto, DocumentType>().ReverseMap();
             CreateMap<DocumentTypeReadDto, DocumentType>().ReverseMap();
+            CreateMap<Car, CarReadDto>().ReverseMap();
+            CreateMap<CarCreateDto, Car>();
+            CreateMap<CarUpdateDto, Car>();
         }
     }
 }
