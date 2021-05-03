@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
@@ -10,12 +11,7 @@ using RentACar.Infrastructure.Options;
 using RentACar.Infrastructure.Repositories;
 using RentACar.Infrastructure.Services;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RentACar.Infrastructure.Extensions
 {
@@ -40,13 +36,18 @@ namespace RentACar.Infrastructure.Extensions
         
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
-            services.AddScoped<IUserService, UserService>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
+
             // Services - Singleton
             services.AddSingleton<IPasswordService, PasswordService>();
             services.AddSingleton<IFileService, FileService>();
+
+
+            // Services - Scoped
+            services.AddScoped<IUserService, UserService>();
             services.AddScoped<IBodyTypeService, BodyTypeService>();
             services.AddScoped<IDocumentTypeService, DocumentTypeService>();
+            services.AddScoped<ICarService, CarService>();
             services.AddScoped<IBrandService, BrandService>();
 
             return services;
