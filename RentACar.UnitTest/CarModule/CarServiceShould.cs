@@ -126,15 +126,15 @@ namespace RentACar.UnitTest.CarModule
             unitOfWork.Verify(u => u.CarRepository.GetById(It.IsAny<long>()), Times.Once);
         }
 
-        [Fact]
-        public async void Delete_CarExists_CallsDeleteMethod()
-        {
-            unitOfWork.Setup(u => u.CarRepository.Delete(It.IsAny<long>()));
+        //[Fact]
+        //public async void Delete_CarExists_CallsDeleteMethod()
+        //{
+        //    unitOfWork.Setup(u => u.CarRepository.Delete(It.IsAny<long>()));
 
-            await carService.Delete(2);
+        //    await carService.Delete(2);
 
-            unitOfWork.Verify(u => u.CarRepository.Delete(It.IsAny<long>()), Times.Once);
-            unitOfWork.Verify(u => u.SaveChangesAsync(), Times.Once);
-        }
+        //    unitOfWork.Verify(u => u.CarRepository.Delete(It.IsAny<long>()), Times.Once);
+        //    unitOfWork.Verify(u => u.SaveChangesAsync(), Times.Once);
+        //}
     }
 }

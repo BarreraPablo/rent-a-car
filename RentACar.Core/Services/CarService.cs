@@ -62,11 +62,11 @@ namespace RentACar.Core.Services
             await unitOfWork.SaveChangesAsync();
         }
 
-        public async Task Delete(long id)
-        {
+        //public async Task Delete(long id)
+        //{
 
-            await unitOfWork.CarRepository.Delete(id);
-            await unitOfWork.SaveChangesAsync();
-        }
+        //    await unitOfWork.CarRepository.Delete(id);
+        //    await unitOfWork.SaveChangesAsync();
+        //}
     }
 }

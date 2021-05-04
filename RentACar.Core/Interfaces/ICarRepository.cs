@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RentACar.Core.Interfaces
 {
-    public interface ICarRepository : ICreateRepository<Car>, IUpdateRepository<Car>, IRemoveRepository<Car>, IReadRepository<Car>
+    public interface ICarRepository : ICreateRepository<Car>, IUpdateRepository<Car>, IReadRepository<Car>
     {
     }
 }
