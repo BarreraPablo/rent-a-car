@@ -49,6 +49,7 @@ namespace RentACar.Infrastructure.Extensions
             services.AddScoped<IDocumentTypeService, DocumentTypeService>();
             services.AddScoped<ICarService, CarService>();
             services.AddScoped<IBrandService, BrandService>();
+            services.AddScoped<IPaymentTypeService, PaymentTypeService>();
 
             return services;
         }
