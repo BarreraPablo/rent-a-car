@@ -201,9 +201,9 @@ namespace RentACar.Infrastructure.Data
 
             modelBuilder.Entity<PaymentType>(entity =>
             {
-                entity.ToTable("Payment");
+                entity.ToTable("PaymentType");
 
-                entity.Property(e => e.Id).HasColumnName("PaymentId");
+                entity.Property(e => e.Id).HasColumnName("PaymentTypeId");
 
                 entity.Property(e => e.CreatedAt).HasColumnType("datetime");
 
