@@ -11,6 +11,7 @@ using Xunit;
 
 namespace RentACar.UnitTest
 {
+    [Collection("Repository tests")]
     public class UserRepositoryShould
     {
         protected DbContextOptions<RentACarContext> ContextOptions { get; }
