@@ -13,6 +13,7 @@ namespace RentACar.Infrastructure.Repositories
         private IUserRepository _userRepository;
         private IBodyTypeRepository _bodyTypeRepository;
         private ICarRepository _carRepository;
+        private IPaymentTypeRepository _paymentTypeRepository;
 
         public UnitOfWork(RentACarContext context)
         {
@@ -75,6 +76,18 @@ namespace RentACar.Infrastructure.Repositories
                     _carRepository = new CarRepository(context);
                 }
                 return _carRepository;
+            }
+        }
+
+        public IPaymentTypeRepository PaymentTypeRepository
+        {
+            get
+            {
+                if(_paymentTypeRepository == null)
+                {
+                    _paymentTypeRepository = new PaymentTypeRepository(context);
+                }
+                return _paymentTypeRepository;
             }
         }
 

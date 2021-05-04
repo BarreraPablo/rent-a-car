@@ -14,6 +14,9 @@ namespace RentACar.Core.Interfaces
         IDocumentTypeRepository DocumentTypeRepository { get; }
 
         ICarRepository CarRepository { get; }
+
+        IPaymentTypeRepository PaymentTypeRepository { get; }
+
         void Dispose();
 
         void SaveChanges();
