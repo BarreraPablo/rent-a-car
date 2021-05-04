@@ -27,6 +27,11 @@ namespace RentACar.Core.Services
 
         public async Task Create(Car car)
         {
+            if(car == null)
+            {
+                throw new ArgumentNotDefinedException();
+            }
+
             car.Available = true;
 
             await unitOfWork.CarRepository.Add(car);
@@ -35,6 +40,12 @@ namespace RentACar.Core.Services
 
         public async Task Update(Car car)
         {
+            if (car == null)
+            {
+                throw new ArgumentNotDefinedException();
+            }
+
+
             var existingCar = await unitOfWork.CarRepository.GetById(car.Id);
 
             if (existingCar == null)
@@ -42,7 +53,7 @@ namespace RentACar.Core.Services
                 throw new NullEntityException();
             }
 
-            if(car.Image == null)
+            if (car.Image == null)
             {
                 car.Image = existingCar.Image;
             }
@@ -53,12 +64,6 @@ namespace RentACar.Core.Services
 
         public async Task Delete(long id)
         {
-            var existingCar = await unitOfWork.CarRepository.GetById(id);
-
-            if (existingCar == null)
-            {
-                throw new NullEntityException();
-            }
 
             await unitOfWork.CarRepository.Delete(id);
             await unitOfWork.SaveChangesAsync();
