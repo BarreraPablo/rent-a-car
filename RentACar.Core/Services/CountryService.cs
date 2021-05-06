@@ -26,8 +26,20 @@ namespace RentACar.Core.Services
                 throw new ArgumentNullException();
             }
 
-            await unitOfWork.CountryRepository.Add(country);
-            await unitOfWork.SaveChangesAsync();
+            Country existentCountry = await unitOfWork.CountryRepository.GetByName(country.Name);
+
+            if(existentCountry == null)
+            {
+                await unitOfWork.CountryRepository.Add(country);
+                await unitOfWork.SaveChangesAsync();
+            } else
+            {
+                country.Id = existentCountry.Id;
+                country.Name = existentCountry.Name;
+                country.CreatedAt = existentCountry.CreatedAt;
+                country.ModifiedAt = existentCountry.ModifiedAt;
+            }
+
         }
 
         public async Task Update(Country country)

@@ -1,6 +1,8 @@
-﻿using RentACar.Core.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using RentACar.Core.Entities;
 using RentACar.Core.Interfaces;
 using RentACar.Infrastructure.Data;
+using System.Threading.Tasks;
 
 namespace RentACar.Infrastructure.Repositories
 {
@@ -11,6 +13,7 @@ namespace RentACar.Infrastructure.Repositories
 
         }
 
-
+        public async Task<Country> GetByName(string name) => await entities.FirstOrDefaultAsync(c => c.Name == name);
+       
     }
 }
