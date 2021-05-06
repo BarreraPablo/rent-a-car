@@ -24,5 +24,15 @@ namespace RentACar.Core.Entities
         public virtual Country Country { get; set; }
         public virtual DocumentType DocumentType { get; set; }
         public virtual ICollection<Rent> Rents { get; set; }
+
+        public int CalculateAge()
+        {
+            int age = 0;
+            age = DateTime.Now.Year - this.Birthday.Year;
+            if (DateTime.Now.DayOfYear < this.Birthday.DayOfYear)
+                age = age - 1;
+
+            return age;
+        }
     }
 }
