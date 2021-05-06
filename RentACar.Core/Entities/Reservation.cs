@@ -1,16 +1,18 @@
-﻿using System;
+﻿using RentACar.Core.Enumerations;
+using System;
 using System.Collections.Generic;
 
 #nullable disable
 
 namespace RentACar.Core.Entities
 {
-    public partial class Rent : BaseEntity
+    public partial class Reservation : BaseEntity
     {
         public long ClientId { get; set; }
         public long UserId { get; set; }
         public long RentTypeId { get; set; }
         public decimal Total { get; set; }
+        public ReservationStatus Status { get; set; }
         public DateTime PickUp { get; set; }
         public DateTime PickOff { get; set; }
         public long PaymentTypeId { get; set; }

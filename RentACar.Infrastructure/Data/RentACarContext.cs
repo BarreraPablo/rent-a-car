@@ -26,7 +26,7 @@ namespace RentACar.Infrastructure.Data
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<DocumentType> DocumentTypes { get; set; }
         public virtual DbSet<PaymentType> PaymentType { get; set; }
-        public virtual DbSet<Rent> Rents { get; set; }
+        public virtual DbSet<Reservation> Reservations { get; set; }
         public virtual DbSet<User> Users { get; set; }
 
 
@@ -40,7 +40,7 @@ namespace RentACar.Infrastructure.Data
 
                 entity.Property(e => e.Id).HasColumnName("BodyTypeId");
 
-                entity.Property(e => e.CreatedAt).HasColumnType("datetime");
+                entity.Property(e => e.CreatedAt).HasColumnType("datetime").HasDefaultValueSql("getdate()");
 
                 entity.Property(e => e.Description)
                     .HasMaxLength(200)
@@ -60,7 +60,7 @@ namespace RentACar.Infrastructure.Data
 
                 entity.Property(e => e.Id).HasColumnName("BrandId");
 
-                entity.Property(e => e.CreatedAt).HasColumnType("datetime");
+                entity.Property(e => e.CreatedAt).HasColumnType("datetime").HasDefaultValueSql("getdate()");
 
                 entity.Property(e => e.Description)
                     .HasMaxLength(200)
@@ -80,7 +80,7 @@ namespace RentACar.Infrastructure.Data
 
                 entity.Property(e => e.Id).HasColumnName("CarId");
 
-                entity.Property(e => e.CreatedAt).HasColumnType("datetime");
+                entity.Property(e => e.CreatedAt).HasColumnType("datetime").HasDefaultValueSql("getdate()");
 
                 entity.Property(e => e.Gearbox)
                     .IsRequired()
@@ -118,7 +118,7 @@ namespace RentACar.Infrastructure.Data
 
                 entity.Property(e => e.Birthday).HasColumnType("datetime");
 
-                entity.Property(e => e.CreatedAt).HasColumnType("datetime");
+                entity.Property(e => e.CreatedAt).HasColumnType("datetime").HasDefaultValueSql("getdate()");
 
                 entity.Property(e => e.DocumentNumber)
                     .IsRequired()
@@ -171,7 +171,7 @@ namespace RentACar.Infrastructure.Data
 
                 entity.Property(e => e.Id).HasColumnName("CountryId");
 
-                entity.Property(e => e.CreatedAt).HasColumnType("datetime");
+                entity.Property(e => e.CreatedAt).HasColumnType("datetime").HasDefaultValueSql("getdate()");
 
                 entity.Property(e => e.ModifiedAt).HasColumnType("datetime");
 
@@ -186,7 +186,7 @@ namespace RentACar.Infrastructure.Data
 
                 entity.Property(e => e.Id).HasColumnName("DocumentTypeId");
 
-                entity.Property(e => e.CreatedAt).HasColumnType("datetime");
+                entity.Property(e => e.CreatedAt).HasColumnType("datetime").HasDefaultValueSql("getdate()");
 
                 entity.Property(e => e.Description)
                     .HasMaxLength(10)
@@ -205,7 +205,7 @@ namespace RentACar.Infrastructure.Data
 
                 entity.Property(e => e.Id).HasColumnName("PaymentTypeId");
 
-                entity.Property(e => e.CreatedAt).HasColumnType("datetime");
+                entity.Property(e => e.CreatedAt).HasColumnType("datetime").HasDefaultValueSql("getdate()");
 
                 entity.Property(e => e.ModifiedAt).HasColumnType("datetime");
 
@@ -219,13 +219,13 @@ namespace RentACar.Infrastructure.Data
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<Rent>(entity =>
+            modelBuilder.Entity<Reservation>(entity =>
             {
                 entity.ToTable("Rent");
 
-                entity.Property(e => e.Id).HasColumnName("RentId");
+                entity.Property(e => e.Id).HasColumnName("ReservationId");
 
-                entity.Property(e => e.CreatedAt).HasColumnType("datetime");
+                entity.Property(e => e.CreatedAt).HasColumnType("datetime").HasDefaultValueSql("getdate()");
 
                 entity.Property(e => e.ModifiedAt).HasColumnType("datetime");
 
@@ -234,6 +234,14 @@ namespace RentACar.Infrastructure.Data
                 entity.Property(e => e.PickUp).HasColumnType("datetime");
 
                 entity.Property(e => e.Total).HasColumnType("money");
+
+                entity.Property(e => e.Status)
+                .IsRequired()
+                .HasMaxLength(15)
+                .HasConversion(
+                    x => x.ToString(),
+                    x => (ReservationStatus)Enum.Parse(typeof(ReservationStatus), x)
+                    );
 
                 entity.HasOne(d => d.Client)
                     .WithMany(p => p.Rents)
@@ -260,7 +268,7 @@ namespace RentACar.Infrastructure.Data
 
                 entity.Property(e => e.Id).HasColumnName("UserId");
 
-                entity.Property(e => e.CreatedAt).HasColumnType("datetime");
+                entity.Property(e => e.CreatedAt).HasColumnType("datetime").HasDefaultValueSql("getdate()");
 
                 entity.Property(e => e.Username)
                     .IsRequired()

@@ -8,7 +8,7 @@ namespace RentACar.Core.Entities
     {
         public Car()
         {
-            Rent = new HashSet<Rent>();
+            Rent = new HashSet<Reservation>();
         }
 
         public string Model { get; set; }
@@ -24,6 +24,6 @@ namespace RentACar.Core.Entities
 
         public virtual BodyType BodyType { get; set; }
         public virtual Brand Brand { get; set; }
-        public virtual ICollection<Rent> Rent { get; set; }
+        public virtual ICollection<Reservation> Rent { get; set; }
     }
 }
