@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using RentACar.Core.CountryDTOs;
 using RentACar.Core.DTOs.BodyTypeDTOs;
 using RentACar.Core.DTOs.BrandDTOs;
 using RentACar.Core.DTOs.CarDTOs;
+using RentACar.Core.DTOs.ClientDTOs;
 using RentACar.Core.DTOs.DocumentTypeDTOs;
 using RentACar.Core.DTOs.PaymentTypeDTOs;
 using RentACar.Core.DTOs.UserDTOs;
@@ -25,6 +27,10 @@ namespace RentACar.Infrastructure.Mappings
             CreateMap<CarUpdateDto, Car>();
             CreateMap<PaymentType, PaymentTypeReadDto>().ReverseMap();
             CreateMap<PaymentTypeCreateDto, PaymentType>();
+            CreateMap<CountryReadDto, Country>().ReverseMap();
+            CreateMap<ClientCreateDto, Client>();
+            CreateMap<Client, ClientReadDto>();
+            CreateMap<ClientUpdateDto, Client>();
         }
     }
 }
