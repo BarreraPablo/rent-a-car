@@ -15,6 +15,7 @@ namespace RentACar.Infrastructure.Repositories
         private ICarRepository _carRepository;
         private IPaymentTypeRepository _paymentTypeRepository;
         private ICountryRepository _countryRepository;
+        private IClientRepository _clientRepository;
 
         public UnitOfWork(RentACarContext context)
         {
@@ -101,6 +102,18 @@ namespace RentACar.Infrastructure.Repositories
                     _countryRepository = new CountryRepository(context);
                 }
                 return _countryRepository;
+            }
+        }
+
+        public IClientRepository ClientRepository
+        {
+            get
+            {
+                if(_clientRepository == null)
+                {
+                    _clientRepository = new ClientRepository(context);
+                }
+                return _clientRepository;
             }
         }
 

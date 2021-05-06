@@ -19,6 +19,8 @@ namespace RentACar.Core.Interfaces
 
         ICountryRepository CountryRepository { get; }
 
+        IClientRepository ClientRepository { get; }
+
         void Dispose();
 
         void SaveChanges();
