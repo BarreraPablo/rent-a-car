@@ -33,12 +33,30 @@ namespace RentACar.Core.Entities
             return daysDiff;
         }
 
-        public void reserve()
+        public void validatePickUpDate()
         {
-            if(Status != ReservationStatus.Paid && Status != ReservationStatus.Pending)
+            if(PickUp.Date <= DateTime.Now.Date)
+            {
+                throw new BussinessException("The Pick Up day must be after today");
+            }
+        }
+
+        public void validateStatus()
+        {
+            if (Status != ReservationStatus.Paid && Status != ReservationStatus.Pending)
             {
                 throw new BussinessException("When initiating a reservation the status can be paid or pending");
             }
+        }
+
+        public void validateReservation()
+        {
+            validateStatus();
+            validatePickUpDate();
+        }
+
+        public void calculateTotal()
+        {
             Total = getNumberOfReservationDays() * Car.PricePerDay;
         }
     }

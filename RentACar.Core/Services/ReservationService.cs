@@ -25,7 +25,8 @@ namespace RentACar.Core.Services
                 throw new ArgumentNullException();
             }
 
-            reservation.reserve();
+            reservation.validateReservation();
+            reservation.calculateTotal();
 
             await unitOfWork.ReservationRepository.Add(reservation);
             await unitOfWork.SaveChangesAsync();
@@ -50,7 +51,8 @@ namespace RentACar.Core.Services
                 throw new BussinessException("The finished reservations cannot be modified");
             }
 
-            reservation.reserve();
+            reservation.validateReservation();
+            reservation.calculateTotal();
 
             await unitOfWork.ReservationRepository.CheckAndUpdate(existentReservation, reservation);
             await unitOfWork.SaveChangesAsync();
