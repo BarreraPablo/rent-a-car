@@ -16,7 +16,8 @@ namespace RentACar.Core.DTOs.CarDTOs
         public string Model { get; set; }
         public BrandReadDto Brand { get; set; }
         public byte Doors { get; set; }
-        public bool AirConditioner { get; set; } 
+        public bool AirConditioner { get; set; }
+        public decimal PricePerDay { get; set; }
         public string Gearbox { get; set; }
         public string Image { get; set; }
         public int? Year { get; set; }

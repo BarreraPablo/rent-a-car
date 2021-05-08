@@ -8,6 +8,7 @@ namespace RentACar.Core.DTOs.CarDTOs
         public string Model { get; set; }
         public long BrandId { get; set; }
         public byte Doors { get; set; }
+        public decimal PricePerDay { get; set; }
         public bool AirConditioner { get; set; }
 
         [RegularExpression("Manual|Automatic", ErrorMessage = "Possibles values of Gearbox are 'Manual' and 'Automatic'")]

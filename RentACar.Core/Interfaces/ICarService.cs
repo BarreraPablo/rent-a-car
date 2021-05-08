@@ -9,5 +9,6 @@ namespace RentACar.Core.Interfaces
         Task Create(Car car);
         IEnumerable<Car> GetAll();
         Task Update(Car car);
+        Task<Car> GetById(long id);
     }
 }
