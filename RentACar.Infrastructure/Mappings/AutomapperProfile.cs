@@ -6,6 +6,7 @@ using RentACar.Core.DTOs.CarDTOs;
 using RentACar.Core.DTOs.ClientDTOs;
 using RentACar.Core.DTOs.DocumentTypeDTOs;
 using RentACar.Core.DTOs.PaymentTypeDTOs;
+using RentACar.Core.DTOs.ReservationDTOs;
 using RentACar.Core.DTOs.UserDTOs;
 using RentACar.Core.Entities;
 
@@ -31,6 +32,9 @@ namespace RentACar.Infrastructure.Mappings
             CreateMap<ClientCreateDto, Client>();
             CreateMap<Client, ClientReadDto>();
             CreateMap<ClientUpdateDto, Client>();
+            CreateMap<User, UserReadDto>();
+            CreateMap<Reservation, ReservationReadDto>();
+            CreateMap<ReservationCreateDto, Reservation>();
         }
     }
 }
