@@ -21,5 +21,25 @@ namespace RentACar.Core.Entities
         public virtual PaymentType PaymentType { get; set; }
         public virtual User User { get; set; }
         public virtual Car Car { get; set; }
+
+        public int getNumberOfReservationDays()
+        {
+            int daysDiff = PickOff.Subtract(PickUp).Days;
+            if(daysDiff <= 0)
+            {
+                throw new BussinessException("The Pick Up day must be greater than the Pick Off day");
+            }
+
+            return daysDiff;
+        }
+
+        public void reserve()
+        {
+            if(Status != ReservationStatus.Paid && Status != ReservationStatus.Pending)
+            {
+                throw new BussinessException("When initiating a reservation the status can be paid or pending");
+            }
+            Total = getNumberOfReservationDays() * Car.PricePerDay;
+        }
     }
 }
