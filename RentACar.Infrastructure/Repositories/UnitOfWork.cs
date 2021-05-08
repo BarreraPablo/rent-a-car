@@ -1,5 +1,4 @@
-﻿using RentACar.Core.Entities;
-using RentACar.Core.Interfaces;
+﻿using RentACar.Core.Interfaces;
 using RentACar.Infrastructure.Data;
 using System.Threading.Tasks;
 
@@ -16,6 +15,7 @@ namespace RentACar.Infrastructure.Repositories
         private IPaymentTypeRepository _paymentTypeRepository;
         private ICountryRepository _countryRepository;
         private IClientRepository _clientRepository;
+        private IReservationRepository _reservationRepository;
 
         public UnitOfWork(RentACarContext context)
         {
@@ -114,6 +114,18 @@ namespace RentACar.Infrastructure.Repositories
                     _clientRepository = new ClientRepository(context);
                 }
                 return _clientRepository;
+            }
+        }
+
+        public IReservationRepository ReservationRepository
+        {
+            get
+            {
+                if(_reservationRepository == null)
+                {
+                    _reservationRepository = new ReservationRepository(context);
+                }
+                return _reservationRepository;
             }
         }
 

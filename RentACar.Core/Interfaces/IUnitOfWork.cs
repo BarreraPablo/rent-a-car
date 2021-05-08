@@ -1,5 +1,4 @@
-﻿using RentACar.Core.Entities;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace RentACar.Core.Interfaces
 {
@@ -20,6 +19,8 @@ namespace RentACar.Core.Interfaces
         ICountryRepository CountryRepository { get; }
 
         IClientRepository ClientRepository { get; }
+
+        IReservationRepository ReservationRepository { get; }
 
         void Dispose();
 
