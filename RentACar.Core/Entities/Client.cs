@@ -9,7 +9,7 @@ namespace RentACar.Core.Entities
     {
         public Client()
         {
-            Rents = new HashSet<Reservation>();
+            Reservation = new HashSet<Reservation>();
         }
 
         public string FirstName { get; set; }
@@ -23,7 +23,7 @@ namespace RentACar.Core.Entities
         public DateTime Birthday { get; set; }
         public virtual Country Country { get; set; }
         public virtual DocumentType DocumentType { get; set; }
-        public virtual ICollection<Reservation> Rents { get; set; }
+        public virtual ICollection<Reservation> Reservation { get; set; }
 
         public int CalculateAge()
         {

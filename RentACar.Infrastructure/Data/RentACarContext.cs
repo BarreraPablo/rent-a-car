@@ -91,6 +91,8 @@ namespace RentACar.Infrastructure.Data
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                entity.Property(e => e.PricePerDay).HasColumnType("money");
+
                 entity.Property(e => e.Model)
                     .IsRequired()
                     .HasMaxLength(70)
@@ -221,7 +223,7 @@ namespace RentACar.Infrastructure.Data
 
             modelBuilder.Entity<Reservation>(entity =>
             {
-                entity.ToTable("Rent");
+                entity.ToTable("Reservation");
 
                 entity.Property(e => e.Id).HasColumnName("ReservationId");
 
@@ -244,22 +246,28 @@ namespace RentACar.Infrastructure.Data
                     );
 
                 entity.HasOne(d => d.Client)
-                    .WithMany(p => p.Rents)
+                    .WithMany(p => p.Reservation)
                     .HasForeignKey(d => d.ClientId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Rent_Client");
 
                 entity.HasOne(d => d.PaymentType)
-                    .WithMany(p => p.Rents)
+                    .WithMany(p => p.Reservation)
                     .HasForeignKey(d => d.PaymentTypeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Rent_PaymentType");
 
                 entity.HasOne(d => d.User)
-                    .WithMany(p => p.Rents)
+                    .WithMany(p => p.Reservation)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Rent_User");
+
+                entity.HasOne(d => d.Car)
+                    .WithMany(p => p.Reservation)
+                    .HasForeignKey(d => d.CarId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Rent_Car");
             });
 
             modelBuilder.Entity<User>(entity =>

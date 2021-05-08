@@ -8,7 +8,7 @@ namespace RentACar.Core.Entities
     {
         public Car()
         {
-            Rent = new HashSet<Reservation>();
+            Reservation = new HashSet<Reservation>();
         }
 
         public string Model { get; set; }
@@ -16,6 +16,7 @@ namespace RentACar.Core.Entities
         public byte Doors { get; set; }
         public bool AirConditioner { get; set; }
         public string Gearbox { get; set; }
+        public decimal PricePerDay { get; set; }
         public int? Year { get; set; }
         public long? BodyTypeId { get; set; }
         public string Image { get; set; }
@@ -24,6 +25,6 @@ namespace RentACar.Core.Entities
 
         public virtual BodyType BodyType { get; set; }
         public virtual Brand Brand { get; set; }
-        public virtual ICollection<Reservation> Rent { get; set; }
+        public virtual ICollection<Reservation> Reservation { get; set; }
     }
 }

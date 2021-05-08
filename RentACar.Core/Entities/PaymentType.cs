@@ -9,10 +9,10 @@ namespace RentACar.Core.Entities
     {
         public PaymentType()
         {
-            Rents = new HashSet<Reservation>();
+            Reservation = new HashSet<Reservation>();
         }
         public string Name { get; set; }
         public string Description { get; set; }
-        public virtual ICollection<Reservation> Rents { get; set; }
+        public virtual ICollection<Reservation> Reservation { get; set; }
     }
 }
