@@ -53,7 +53,7 @@ namespace RentACar.Api.Controllers
         private string GenerateToken(User user)
         {
             // Header
-            var _symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Authentication:SecretKey"]));
+            var _symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["AuthOptions:SecretKey"]));
             var signingCredentials = new SigningCredentials(_symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
             var header = new JwtHeader(signingCredentials);
 
@@ -61,14 +61,15 @@ namespace RentACar.Api.Controllers
             var claims = new[]
             {
                 new Claim(ClaimTypes.Name, user.Username),
+                new Claim("Id", user.Id.ToString()),
                 new Claim(ClaimTypes.Email, user.EmailAddress),
                 new Claim(ClaimTypes.Role, user.Role.ToString()),
             };
 
             // Payload
             var payload = new JwtPayload(
-                Configuration["Authentication:Issuer"],
-                Configuration["Authentication:Audience"],
+                Configuration["AuthOptions:Issuer"],
+                Configuration["AuthOptions:Audience"],
                 claims,
                 DateTime.Now,
                 DateTime.UtcNow.AddMinutes(10)
