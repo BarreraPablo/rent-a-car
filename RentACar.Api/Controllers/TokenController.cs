@@ -38,13 +38,18 @@ namespace RentACar.Api.Controllers
                 return Ok(new { token = token }); 
             }
 
-            return NotFound();
+            return Unauthorized();
         }
 
 
         private async Task<(bool, User)> IsValidUser(UserLogin login)
         {
             var user = await userService.GetByUsername(login);
+            if(user == null)
+            {
+                return (false, user);
+            }
+
             var isValid = passwordService.Check(user.Password, login.Password);
 
             return (isValid, user);
