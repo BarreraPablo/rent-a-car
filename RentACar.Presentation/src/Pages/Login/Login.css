@@ -1,0 +1,15 @@
+#login-form {
+    background-color: #f6f8fa;
+    width: 400px;
+    /* padding: 25px;
+    border-radius: 6px; */
+    /* border: 1px solid #eaecef; */
+}
+
+.no-bottom-margin.ant-form-item {
+    margin-bottom: 0
+}
+
+.fullHeight {
+    min-height: 100vh;
+}
