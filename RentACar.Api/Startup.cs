@@ -63,6 +63,7 @@ namespace RentACar.Api
                 };
             });
 
+            services.AddCors();
 
             services.AddMvc(options =>
             {
@@ -90,6 +91,10 @@ namespace RentACar.Api
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseCors(
+                 options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
+             );
 
             app.UseEndpoints(endpoints =>
             {
