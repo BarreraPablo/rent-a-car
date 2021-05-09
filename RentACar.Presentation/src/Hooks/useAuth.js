@@ -1,4 +1,4 @@
-import React, { useState, useContext, createContext } from "react";
+import React, { useState, useContext, createContext, useEffect } from "react";
 import axios from "axios";
 
 const api_url = process.env.REACT_APP_API_URL;
@@ -15,7 +15,18 @@ export const useAuth = () => {
 };
 
 function useProvideAuth() {
-    const [user, setUser] = useState(null);
+    const tryGetUser = () => {
+        const token = localStorage.getItem("token");
+        const userName = localStorage.getItem("username");
+        if (token) {
+            axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+            return { username: userName };
+        } else {
+            return false;
+        }
+    };
+
+    const [user, setUser] = useState(tryGetUser);
 
     const signin = (username, password, remember) => {
         const bodyRequest = {
@@ -28,9 +39,9 @@ function useProvideAuth() {
             .then((res) => {
                 if (remember) {
                     localStorage.setItem("token", res.data.token);
+                    localStorage.setItem("username", username);
                 }
-                axios.defaults.headers.common["Authorization"] =
-                    "Bearer " + res.data.token;
+                axios.defaults.headers.common["Authorization"] = "Bearer " + res.data.token;
 
                 setUser({ username: username });
                 return Promise.resolve(res);
@@ -55,6 +66,6 @@ function useProvideAuth() {
     return {
         user,
         signin,
-        signout,
+        signout
     };
 }
