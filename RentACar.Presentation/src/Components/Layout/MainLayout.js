@@ -9,6 +9,7 @@ import {
 } from '@ant-design/icons';
 import { useState } from 'react';
 import { NavLink } from "react-router-dom";
+import './MainLayout.css';
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -22,7 +23,7 @@ function MainLayout({children}) {
     console.log('re redenrs main layout')
 
     return (
-        <Layout style={{ minHeight: "100vh" }}>
+        <Layout style={{ minHeight: "100vh", backgroundColor: "red" }}>
             <Sider
                 collapsible
                 collapsed={collapsed}
@@ -56,7 +57,7 @@ function MainLayout({children}) {
                     </SubMenu>
                 </Menu>
             </Sider>
-            <Layout className="site-layout">
+            <Layout className="site-layout background-layout-color">
                 <Header
                     className="site-layout-background"
                     style={{ padding: 0 }}
@@ -64,7 +65,7 @@ function MainLayout({children}) {
                 <Content style={{ margin: "0 16px" }}>
                     {children}
                 </Content>
-                <Footer style={{ textAlign: "center" }}>
+                <Footer className="background-layout-color" style={{ textAlign: "center" }}>
                     Creado por Pablo Barrera
                 </Footer>
             </Layout>
