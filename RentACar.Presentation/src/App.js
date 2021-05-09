@@ -7,13 +7,18 @@ import {
 import PrivateRoute from "./Components/PrivateRoute/PrivateRoute";
 import { ProvideAuth } from "./Hooks/useAuth";
 import Login from "./Pages/Login/Login";
+import MainLayout from "./Components/Layout/MainLayout"
+import { Children } from "react";
 
 function App() {
     return (
         <ProvideAuth>
             <Router>
-                <PrivateRoute path="/home">
-                    <h1>Test</h1>
+                <PrivateRoute path={["/cars", "/reservations"]}>
+                    <MainLayout >
+                        <Route path='/cars' component={() => (<h1>Test1</h1>)} />
+                        <Route path='/reservations' component={() => (<h1>Test2</h1>)} />
+                    </MainLayout>
                 </PrivateRoute>
                 <Route exact path={["/", "/login"]} component={Login} />
             </Router>

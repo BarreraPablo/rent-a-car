@@ -29,7 +29,7 @@ function LoginForm() {
         setLoading(true);
 
         auth.signin(values.username, values.password, values.remember)
-            .then((res) => history.replace("/home"))
+            .then((res) => history.replace("/cars"))
             .catch((err) => {
                 setMessage(err.message);
                 setLoading(false);
