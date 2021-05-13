@@ -27,6 +27,8 @@ namespace RentACar.Core.Services
 
         public async Task<Car> GetById(long id) => await unitOfWork.CarRepository.GetById(id);
 
+        public async Task<Car> GetByIdWith(long id, bool bodyType, bool brand) => await unitOfWork.CarRepository.GetByIdWith(id, bodyType, brand);
+
         public async Task Create(Car car)
         {
             if(car == null)

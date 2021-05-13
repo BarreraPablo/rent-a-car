@@ -10,5 +10,6 @@ namespace RentACar.Core.Interfaces
         IEnumerable<Car> GetAll();
         Task Update(Car car);
         Task<Car> GetById(long id);
+        Task<Car> GetByIdWith(long id, bool bodyType, bool brand);
     }
 }

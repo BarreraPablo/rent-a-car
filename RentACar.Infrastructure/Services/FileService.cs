@@ -60,5 +60,17 @@ namespace RentACar.Infrastructure.Services
                 }
             }
         }
+
+        public void PrependUrl(Car car, string baseUrl)
+        {
+            var imagesFolder = options.CarsImagesFolder.Replace("wwwroot", "");
+
+            if (car.Image != null)
+            {
+                var filePath = baseUrl + imagesFolder + car.Image;
+
+                car.Image = filePath;
+            }
+        }
     }
 }

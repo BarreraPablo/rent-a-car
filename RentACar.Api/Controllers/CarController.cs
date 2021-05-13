@@ -50,6 +50,25 @@ namespace RentACar.Api.Controllers
             }
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(long id)
+        {
+            string baseUrl = string.Format("{0}://{1}{2}", Request.Scheme, Request.Host, Request.PathBase);
+
+            Car car = await carService.GetByIdWith(id, true, true);
+
+            if(car == null)
+            {
+                return NotFound();
+            }
+
+            fileService.PrependUrl(car, baseUrl);
+
+            CarReadDto carReadDto = mapper.Map<CarReadDto>(car);
+
+            return Ok(carReadDto);
+        }
+
         [HttpPost]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> Create([FromForm] CarCreateDto carCreateDto, IFormFile image)

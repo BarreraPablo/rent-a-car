@@ -9,5 +9,6 @@ namespace RentACar.Core.Interfaces
 {
     public interface ICarRepository : ICreateRepository<Car>, IUpdateRepository<Car>, IReadRepository<Car>
     {
+        Task<Car> GetByIdWith(long id, bool bodyType, bool brand);
     }
 }

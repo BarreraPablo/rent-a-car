@@ -9,5 +9,6 @@ namespace RentACar.Infrastructure.Interfaces
     {
         Task<string> SaveImage(IFormFile image);
         void PrependUrl(IEnumerable<Car> cars, string baseUrl);
+        void PrependUrl(Car car, string baseUrl);
     }
 }
