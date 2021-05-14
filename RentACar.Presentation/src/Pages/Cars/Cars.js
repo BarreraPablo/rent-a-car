@@ -4,9 +4,7 @@ import React, { useEffect, useState } from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import * as carService from "../../services/carService";
 import "./Cars.css";
-
-const SHOW = "show";
-const EDIT = "edit";
+import { SHOW, EDIT } from "./constants"
 
 function Cars() {
     const [tableData, setTableData] = useState([]);

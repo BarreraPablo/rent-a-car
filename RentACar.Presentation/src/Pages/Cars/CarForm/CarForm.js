@@ -20,6 +20,7 @@ import * as bodyTypeService from "../../../services/bodyTypeService";
 import * as brandService from "../../../services/brandService";
 import * as CarService from "../../../services/carService";
 import "./CarForm.css";
+import { NEW, EDIT, SHOW} from '../constants';
 
 export function CarForm() {
     const { id } = useParams();
@@ -28,7 +29,7 @@ export function CarForm() {
     const [imageUrl, setImageUrl] = useState("");
     const [brands, setBrands] = useState([]);
     const [bodyTypes, setBodyTypes] = useState([]);
-    const [action, setAction] = useState("new");
+    const [action, setAction] = useState(NEW);
     const [loading, setLoading] = useState(false);
     const [showSuccess, setShowSuccess] = useState(false);
 
@@ -48,11 +49,11 @@ export function CarForm() {
     }, []);
 
     const setFormAction = () => {
-        if (location.pathname.includes("show")) {
-            setAction("show");
+        if (location.pathname.includes(SHOW)) {
+            setAction(SHOW);
             fillData();
-        } else if (location.pathname.includes("edit")) {
-            setAction("edit");
+        } else if (location.pathname.includes(EDIT)) {
+            setAction(EDIT);
             fillData();
         }
     };
@@ -96,7 +97,7 @@ export function CarForm() {
         return e && e.fileList;
     };
 
-    const setEdit = () => setAction('edit');
+    const setEdit = () => setAction(EDIT);
 
     const onFinish = (values) => {
         console.log('onFinish', values)
@@ -123,14 +124,14 @@ export function CarForm() {
 
     const actionProps = {
         input: {
-            bordered: action !== "show",
-            disabled: action === "show",
+            bordered: action !== SHOW,
+            disabled: action === SHOW,
             className: "disabled-input"
         },
         select: {
-            bordered: action !== "show",
-            showArrow: action !== "show",
-            open: action === "show" ? false : undefined
+            bordered: action !== SHOW,
+            showArrow: action !== SHOW,
+            open: action === SHOW ? false : undefined
         }
     }
 
@@ -256,11 +257,11 @@ export function CarForm() {
                             </Form.Item>
 
                             <Form.Item
-                                hidden={action === 'new'}
+                                hidden={action === NEW}
                                 name="available"
                                 label="Available"
                                 defaultValue={false}
-                                rules={[{ required: action === 'edit' }]}
+                                rules={[{ required: action === EDIT }]}
                             >
                                 <Select className="disabled-input" {...actionProps.select}>
                                     <Option value={true}>Yes</Option>
@@ -273,7 +274,7 @@ export function CarForm() {
                                     type="primary"
                                     size="large"
                                     block
-                                    hidden={action !== 'show'}
+                                    hidden={action !== SHOW}
                                     onClick={setEdit}
                                 >
                                     Edit
@@ -282,7 +283,7 @@ export function CarForm() {
                                     type="primary"
                                     size="large"
                                     block
-                                    hidden={action === 'show'}
+                                    hidden={action === SHOW}
                                     htmlType="submit"
                                     loading={loading}
                                 >
