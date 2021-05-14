@@ -45,7 +45,7 @@ export function CarForm() {
             .catch((err) => message.error(err));
 
         setFormAction();
-    });
+    }, []);
 
     const setFormAction = () => {
         if (location.pathname.includes("show")) {
