@@ -231,7 +231,7 @@ namespace RentACar.Infrastructure.Data
 
                 entity.Property(e => e.ModifiedAt).HasColumnType("datetime");
 
-                entity.Property(e => e.PickOff).HasColumnType("datetime");
+                entity.Property(e => e.DropOff).HasColumnType("datetime");
 
                 entity.Property(e => e.PickUp).HasColumnType("datetime");
 

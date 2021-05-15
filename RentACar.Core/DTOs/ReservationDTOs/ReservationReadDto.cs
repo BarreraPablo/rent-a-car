@@ -18,7 +18,7 @@ namespace RentACar.Core.DTOs.ReservationDTOs
         public decimal Total { get; set; }
         public string Status { get; set; }
         public DateTime PickUp { get; set; }
-        public DateTime PickOff { get; set; }
+        public DateTime DropOff { get; set; }
         public ClientReadDto Client { get; set; }
         public PaymentTypeReadDto PaymentType { get; set; }
         public UserReadDto User { get; set; }

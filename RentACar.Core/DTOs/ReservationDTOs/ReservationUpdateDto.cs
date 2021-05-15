@@ -13,7 +13,7 @@ namespace RentACar.Core.DTOs.ReservationDTOs
         public DateTime PickUp { get; set; }
 
         [Required]
-        public DateTime PickOff { get; set; }
+        public DateTime DropOff { get; set; }
 
         [Required]
         [Range(1, long.MaxValue, ErrorMessage = "The specified payment type is wrong")]

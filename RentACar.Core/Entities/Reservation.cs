@@ -15,7 +15,7 @@ namespace RentACar.Core.Entities
         public decimal Total { get; set; }
         public ReservationStatus Status { get; set; }
         public DateTime PickUp { get; set; }
-        public DateTime PickOff { get; set; }
+        public DateTime DropOff { get; set; }
         public long PaymentTypeId { get; set; }
         public virtual Client Client { get; set; }
         public virtual PaymentType PaymentType { get; set; }
@@ -24,7 +24,7 @@ namespace RentACar.Core.Entities
 
         public int getNumberOfReservationDays()
         {
-            int daysDiff = PickOff.Subtract(PickUp).Days;
+            int daysDiff = DropOff.Subtract(PickUp).Days;
             if(daysDiff <= 0)
             {
                 throw new BussinessException("The Pick Up day must be greater than the Pick Off day");
