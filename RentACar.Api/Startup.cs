@@ -28,10 +28,14 @@ namespace RentACar.Api
         {
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            services.AddControllers(options => {
+            services.AddControllers(options =>
+            {
                 options.Filters.Add<GlobalExceptionFilter>();
             }).AddNewtonsoftJson(options =>
-                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            {
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                options.UseCamelCasing(processDictionaryKeys: true);
+            }
             ).ConfigureApiBehaviorOptions(options =>
             {
                 options.SuppressModelStateInvalidFilter = true;
@@ -68,6 +72,7 @@ namespace RentACar.Api
             services.AddMvc(options =>
             {
                 options.Filters.Add<ValidationFilter>();
+
             });
         }
 
