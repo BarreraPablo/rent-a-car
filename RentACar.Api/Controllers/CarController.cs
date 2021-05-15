@@ -30,13 +30,13 @@ namespace RentACar.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(bool onlyAvailable = false)
         {
             try
             {
                 string baseUrl = string.Format("{0}://{1}{2}", Request.Scheme, Request.Host, Request.PathBase);
 
-                var cars = carService.GetAll();
+                var cars = carService.GetAll(onlyAvailable);
 
                 fileService.PrependUrl(cars, baseUrl);
 

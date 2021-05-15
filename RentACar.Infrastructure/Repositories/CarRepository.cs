@@ -12,9 +12,20 @@ namespace RentACar.Infrastructure.Repositories
     {
         public CarRepository(RentACarContext context) : base(context) { }
 
-        public override IEnumerable<Car> GetAll()
+        public IEnumerable<Car> GetAllWith(bool brand, bool bodyType, bool onlyAvailable)
         {
-            return entities.Include("Brand").Include("BodyType").AsEnumerable();
+            var entity = entities.AsQueryable();
+
+            if (brand)
+                entity = entity.Include("Brand");
+
+            if (bodyType)
+                entity = entity.Include("BodyType");
+
+            if (onlyAvailable)
+                entity = entity.Where(c => c.Available);
+
+            return entity;
         }
 
         public async Task<Car> GetByIdWith(long id, bool bodyType, bool brand)

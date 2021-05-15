@@ -18,9 +18,9 @@ namespace RentACar.Core.Services
             this.unitOfWork = unitOfWork;
         }
 
-        public IEnumerable<Car> GetAll()
+        public IEnumerable<Car> GetAll(bool onlyAvailable)
         {
-            var cars = unitOfWork.CarRepository.GetAll();
+            var cars = unitOfWork.CarRepository.GetAllWith(true, true, onlyAvailable);
 
             return cars;
         }
