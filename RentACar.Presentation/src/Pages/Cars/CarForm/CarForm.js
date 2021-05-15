@@ -11,7 +11,7 @@ import {
     Result,
     Row,
     Select,
-    Upload
+    Upload,
 } from "antd";
 import { Option } from "antd/lib/mentions";
 import React, { useEffect, useState } from "react";
@@ -20,7 +20,7 @@ import * as bodyTypeService from "../../../services/bodyTypeService";
 import * as brandService from "../../../services/brandService";
 import * as CarService from "../../../services/carService";
 import "./CarForm.css";
-import { NEW, EDIT, SHOW} from '../constants';
+import { NEW, EDIT, SHOW } from "../constants";
 
 export function CarForm() {
     const { id } = useParams();
@@ -76,7 +76,7 @@ export function CarForm() {
                     available: car.available,
                 });
             })
-            .catch((err) => console.log(err));
+            .catch((err) => message.error(err));
     };
 
     const validateMessages = {
@@ -84,10 +84,10 @@ export function CarForm() {
     };
 
     const beforeUpload = (file) => {
-        if (file.type !== 'image/png') {
+        if (file.type !== "image/png") {
             message.error(`${file.name} is not a png file`);
-          }
-        return file.type === 'image/png' ? false : Upload.LIST_IGNORE;;
+        }
+        return file.type === "image/png" ? false : Upload.LIST_IGNORE;
     };
 
     const normFile = (e) => {
@@ -100,7 +100,6 @@ export function CarForm() {
     const setEdit = () => setAction(EDIT);
 
     const onFinish = (values) => {
-        console.log('onFinish', values)
         setLoading(true);
         values.id = parseInt(id);
         values.image = values.image ? values.image[0].originFileObj : null;
@@ -120,20 +119,20 @@ export function CarForm() {
 
     const tailLayout = {
         wrapperCol: { offset: 4, span: 12 },
-      };
+    };
 
     const actionProps = {
         input: {
             bordered: action !== SHOW,
             disabled: action === SHOW,
-            className: "disabled-input"
+            className: "disabled-input",
         },
         select: {
             bordered: action !== SHOW,
             showArrow: action !== SHOW,
-            open: action === SHOW ? false : undefined
-        }
-    }
+            open: action === SHOW ? false : undefined,
+        },
+    };
 
     return (
         <div className="site-card-border-less-wrapper">
@@ -171,16 +170,14 @@ export function CarForm() {
                                 label="Model"
                                 rules={[{ required: true }]}
                             >
-                                <Input {...actionProps.input}  />
+                                <Input {...actionProps.input} />
                             </Form.Item>
                             <Form.Item
                                 name="brandId"
                                 label="Brand"
                                 rules={[{ required: true }]}
                             >
-                                <Select
-                                    {...actionProps.select}
-                                >
+                                <Select {...actionProps.select}>
                                     {brands.map((brand) => (
                                         <Option value={brand.id}>
                                             {brand.name}
@@ -193,7 +190,11 @@ export function CarForm() {
                                 label="Doors"
                                 rules={[{ required: true }]}
                             >
-                                <InputNumber {...actionProps.input} min={1} max={5} />
+                                <InputNumber
+                                    {...actionProps.input}
+                                    min={1}
+                                    max={5}
+                                />
                             </Form.Item>
                             <Form.Item
                                 name="airConditioner"
@@ -211,7 +212,11 @@ export function CarForm() {
                                 label="Price per day"
                                 rules={[{ required: true }]}
                             >
-                                <InputNumber {...actionProps.input} min={400} max={5000} />
+                                <InputNumber
+                                    {...actionProps.input}
+                                    min={400}
+                                    max={5000}
+                                />
                             </Form.Item>
 
                             <Form.Item
@@ -231,7 +236,11 @@ export function CarForm() {
                                 label="Year"
                                 rules={[{ required: true }]}
                             >
-                                <InputNumber {...actionProps.input} min={2000} max={2030} />
+                                <InputNumber
+                                    {...actionProps.input}
+                                    min={2000}
+                                    max={2030}
+                                />
                             </Form.Item>
 
                             <Form.Item
@@ -239,7 +248,11 @@ export function CarForm() {
                                 label="Seats"
                                 rules={[{ required: true }]}
                             >
-                                <InputNumber  {...actionProps.input} min={2} max={15} />
+                                <InputNumber
+                                    {...actionProps.input}
+                                    min={2}
+                                    max={15}
+                                />
                             </Form.Item>
 
                             <Form.Item
@@ -263,7 +276,10 @@ export function CarForm() {
                                 defaultValue={false}
                                 rules={[{ required: action === EDIT }]}
                             >
-                                <Select className="disabled-input" {...actionProps.select}>
+                                <Select
+                                    className="disabled-input"
+                                    {...actionProps.select}
+                                >
                                     <Option value={true}>Yes</Option>
                                     <Option value={false}>No</Option>
                                 </Select>

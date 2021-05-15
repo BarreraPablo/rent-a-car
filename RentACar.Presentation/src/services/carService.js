@@ -2,14 +2,14 @@ import axios from "axios";
 
 const api_url = process.env.REACT_APP_API_URL;
 
-export const getCars = () => {
+export const getCars = (onlyAvailable = false) => {
     return axios
-        .get(api_url + "car")
+        .get(api_url + "car", {params: onlyAvailable})
         .then((res) => {
             return Promise.resolve(res.data);
         })
         .catch((err) => {
-            console.log(err);
+            return Promise.reject('Something gone wrong getting the cars');
         });
 };
 
@@ -20,7 +20,7 @@ export const getById = (id) => {
             return Promise.resolve(res.data);
         })
         .catch((err) => {
-            console.log(err);
+            return Promise.reject("Something gone wrong getting the car data");
         });
 };
 
