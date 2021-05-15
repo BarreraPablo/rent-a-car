@@ -18,6 +18,8 @@ namespace RentACar.Core.Services
 
         public IEnumerable<Reservation> GetReservations() => unitOfWork.ReservationRepository.GetAll();
 
+        public Task<Reservation> GetById(long id) => unitOfWork.ReservationRepository.GetByIdWith(id, true, true, true, true);
+
         public async Task Create(Reservation reservation)
         {
             if (reservation == null)

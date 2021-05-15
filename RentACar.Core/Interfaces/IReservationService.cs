@@ -6,6 +6,7 @@ namespace RentACar.Core.Interfaces
 {
     public interface IReservationService
     {
+        Task<Reservation> GetById(long id);
         Task Create(Reservation reservation);
         IEnumerable<Reservation> GetReservations();
         Task Update(Reservation reservation);
