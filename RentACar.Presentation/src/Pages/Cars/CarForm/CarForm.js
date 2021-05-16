@@ -46,6 +46,7 @@ export function CarForm() {
             .catch((err) => message.error(err));
 
         setFormAction();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const setFormAction = () => {
