@@ -65,6 +65,7 @@ namespace RentACar.Api.Controllers
             Reservation reservation = mapper.Map<Reservation>(reservationCreateDto);
             reservation.Status = reservationCreateDto.Paid ? ReservationStatus.Paid : ReservationStatus.Pending;
             reservation.Car = await carService.GetById(reservation.CarId);
+            reservation.UserId = long.Parse(User.FindFirst("Id").Value);
 
             await reservationService.Update(reservation);
 
