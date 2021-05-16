@@ -35,6 +35,7 @@ namespace RentACar.Infrastructure.Mappings
             CreateMap<User, UserReadDto>();
             CreateMap<Reservation, ReservationReadDto>();
             CreateMap<ReservationCreateDto, Reservation>();
+            CreateMap<ReservationUpdateDto, Reservation>();
         }
     }
 }
