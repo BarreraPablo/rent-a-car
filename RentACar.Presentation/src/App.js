@@ -11,6 +11,7 @@ import { CarForm } from "./Pages/Cars/CarForm/CarForm";
 import Cars from "./Pages/Cars/Cars";
 import Login from "./Pages/Login/Login";
 import Reservation from "./Pages/Reservation/Reservation"
+import ReservationForm from "./Pages/Reservation/ReservationForm/ReservationForm"
 
 function App() {
     return (
@@ -20,7 +21,7 @@ function App() {
                     <MainLayout >
                         <Route exact path={['/cars/new', '/cars/edit/:id', '/cars/show/:id']} component={CarForm} />
                         <Route exact path='/cars' component={Cars} />
-                        <Route path='/reservations' component={() => (<h1>Test2</h1>)} />
+                        <Route exact path={['/reservations/new', '/reservations/show/:id', '/reservations/edit/:id']} component={ReservationForm} />
                         <Route exact path='/reservations' component={Reservation} />
                     </MainLayout>
                 </PrivateRoute>
