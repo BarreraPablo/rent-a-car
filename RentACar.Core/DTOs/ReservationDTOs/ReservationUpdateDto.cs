@@ -25,7 +25,7 @@ namespace RentACar.Core.DTOs.ReservationDTOs
 
         [Required]
         [Range(1, long.MaxValue, ErrorMessage = "The specified client is wrong")]
-        public long CliendId { get; set; }
+        public long ClientId { get; set; }
 
         [Required]
         [Range(1, long.MaxValue, ErrorMessage = "The specified car is wrong")]
