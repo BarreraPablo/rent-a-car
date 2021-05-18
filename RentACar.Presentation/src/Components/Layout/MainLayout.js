@@ -38,19 +38,19 @@ function MainLayout({children}) {
                             Reservations
                         </NavLink>
                     </Menu.Item>
+                    <Menu.Item key="3" icon={<UserOutlined />}>
+                        <NavLink to="/clients">
+                            Clients
+                        </NavLink>
+                    </Menu.Item>
                     <SubMenu key="sub1" icon={<UserOutlined />} title="User">
-                        <Menu.Item key="3">Item1</Menu.Item>
-                        <Menu.Item key="4">Item2</Menu.Item>
-                        <Menu.Item key="5">Item3</Menu.Item>
-                    </SubMenu>
-                    <SubMenu key="sub2" icon={<UserOutlined />} title="Clients">
-                        <Menu.Item key="6">Item1</Menu.Item>
-                        <Menu.Item key="7">Item2</Menu.Item>
-                        <Menu.Item key="8">Item3</Menu.Item>
+                        <Menu.Item key="4">Item1</Menu.Item>
+                        <Menu.Item key="5">Item2</Menu.Item>
+                        <Menu.Item key="6">Item3</Menu.Item>
                     </SubMenu>
                     <SubMenu key="sub3" icon={<TeamOutlined />} title="General">
-                        <Menu.Item key="9">Brands</Menu.Item>
-                        <Menu.Item key="10">Payment Methods</Menu.Item>
+                        <Menu.Item key="7">Brands</Menu.Item>
+                        <Menu.Item key="8">Payment Methods</Menu.Item>
                     </SubMenu>
                 </Menu>
             </Sider>
