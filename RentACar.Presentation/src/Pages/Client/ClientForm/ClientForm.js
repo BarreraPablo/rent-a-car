@@ -40,6 +40,7 @@ function ClientForm() {
 
     const validateMessages = {
         required: "This field is required!",
+        types: {email: "Email is invalid!"}
     };
 
     const layout = {
@@ -111,18 +112,11 @@ function ClientForm() {
         }
     };
 
-    const disabledDate = (current) => {
-        // Can not select days before today and today
-        return current && current.valueOf() < Date.now();
-    };
 
     const onFinish = (values) => {
-        console.log("values", values);
         setLoading(true);
         values.country = values.country.toLowerCase();
         const selectedCountry = countries.find(c => c.value.toLowerCase() === values.country); 
-
-        console.log("selectedCountry", selectedCountry);
 
         const client = {
             ...values,
@@ -130,8 +124,6 @@ function ClientForm() {
             birthday: values.birthday.format("YYYY-MM-DD"),
             country: selectedCountry ? {id: selectedCountry.key, name: selectedCountry.value } : {id: 0, name: values.country}
         };
-
-        console.log("newvalues", client);
 
         clientService
             .save(client, action)
@@ -159,12 +151,6 @@ function ClientForm() {
     };
 
     const setEdit = () => setAction(EDIT);
-
-    const rangeConfig = {
-        rules: [
-            { type: "array", required: true, message: "Please select time!" },
-        ],
-    };
 
     return (
         <div className="site-card-border-less-wrapper">
@@ -247,8 +233,7 @@ function ClientForm() {
                                     }}
                                     filterOption={(inputValue, option) =>
                                         option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
-                                      }
-                                    placeholder="input here"
+                                    }
                                 />
                             </Form.Item>
                             <Form.Item
