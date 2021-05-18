@@ -20,6 +20,19 @@ namespace RentACar.Infrastructure.Repositories
             return entities.Include("DocumentType").Include("Country").AsEnumerable();
         }
 
+        public async Task<Client> GetByIdWith(long id, bool documentType, bool country)
+        {
+            var entity = entities.AsQueryable();
+
+            if (documentType)
+                entity = entity.Include("DocumentType");
+
+            if (country)
+                entity = entity.Include("Country");
+
+            return await entity.FirstOrDefaultAsync(c => c.Id == id);
+        }
+
         public async Task<Client> GetByDocumentNumber(string documentNumber)
         {
             return await entities.FirstOrDefaultAsync(c => c.DocumentNumber == documentNumber);

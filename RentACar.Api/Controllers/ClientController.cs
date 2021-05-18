@@ -37,6 +37,16 @@ namespace RentACar.Api.Controllers
             return Ok(clientsRead);
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(long id)
+        {
+            Client client = await clientService.GetById(id);
+
+            ClientReadDto clientReadDto = mapper.Map<ClientReadDto>(client);
+
+            return Ok(clientReadDto);
+        }
+
         [HttpPost]
         public async Task<IActionResult> RegisterClient(ClientCreateDto clientCreateDto)
         {

@@ -18,6 +18,8 @@ namespace RentACar.Core.Services
 
         public IEnumerable<Client> GetClients() => unitOfWork.ClientRepository.GetAll();
 
+        public async Task<Client> GetById(long id) => await unitOfWork.ClientRepository.GetByIdWith(id, true, true);
+
         public async Task Create(Client client)
         {
             if (client == null)

@@ -8,7 +8,7 @@ namespace RentACar.Core.Interfaces
     {
         Task Create(Client client);
         IEnumerable<Client> GetClients();
-
+        Task<Client> GetById(long id);
         Task Update(Client client);
     }
 }
