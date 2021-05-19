@@ -191,7 +191,7 @@ namespace RentACar.Infrastructure.Data
                 entity.Property(e => e.CreatedAt).HasColumnType("datetime").HasDefaultValueSql("getdate()");
 
                 entity.Property(e => e.Description)
-                    .HasMaxLength(10)
+                    .HasMaxLength(25)
                     .IsFixedLength();
 
                 entity.Property(e => e.ModifiedAt).HasColumnType("datetime");
