@@ -17,7 +17,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { EditableCell } from "../../Components/EditableCell/EditableCell";
 import * as bodyTypesServices from "../../services/bodyTypeService";
-import { EDIT, NEW } from "../Client/constants";
+import { EDIT, NEW } from "./constants";
 
 function BodyType() {
     const [form] = Form.useForm();
