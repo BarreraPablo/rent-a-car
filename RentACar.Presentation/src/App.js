@@ -15,12 +15,13 @@ import ReservationForm from "./Pages/Reservation/ReservationForm/ReservationForm
 import Client from "./Pages/Client/Client";
 import ClientForm from "./Pages/Client/ClientForm/ClientForm";
 import BodyType from "./Pages/BodyTypes/BodyType";
+import Brand from "./Pages/Brands/Brand";
 
 function App() {
     return (
         <ProvideAuth>
             <Router>
-                <PrivateRoute path={["/cars", "/reservations", "/clients", "/bodyTypes"]}>
+                <PrivateRoute path={["/cars", "/reservations", "/clients", "/bodyTypes", "/brands", "/documentypes", "/paymentypes"]}>
                     <MainLayout >
                         <Route exact path={['/cars/new', '/cars/edit/:id', '/cars/show/:id']} component={CarForm} />
                         <Route exact path='/cars' component={Cars} />
@@ -29,6 +30,7 @@ function App() {
                         <Route exact path={["/clients/new", "/clients/show/:id", "/clients/edit/:id"]} component={ClientForm} />
                         <Route exact path="/clients" component={Client} />
                         <Route exact path="/bodytypes" component={BodyType} />
+                        <Route exact path="/brands" component={Brand} />
                     </MainLayout>
                 </PrivateRoute>
                 <Route exact path={["/", "/login"]} component={Login} />
