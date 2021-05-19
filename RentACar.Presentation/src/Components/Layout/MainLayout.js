@@ -7,6 +7,7 @@ import {
 import { Layout, Menu } from 'antd';
 import { useState } from 'react';
 import { NavLink } from "react-router-dom";
+import { useAuth } from '../../Hooks/useAuth';
 import './MainLayout.css';
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -14,6 +15,7 @@ const { SubMenu } = Menu;
 
 function MainLayout({children}) {
     const [collapsed, setCollapsed] = useState(false);
+    let auth = useAuth();
 
     const onCollapse = collapsed => {
         setCollapsed(collapsed);
@@ -68,7 +70,7 @@ function MainLayout({children}) {
                     </SubMenu>
                     <SubMenu key="sub2" icon={<TeamOutlined />} title="User">
                         <Menu.Item key="8">Settings</Menu.Item>
-                        <Menu.Item key="9">Log Out</Menu.Item>
+                        <Menu.Item key="9" onClick={auth.signout}>Log Out</Menu.Item>
                     </SubMenu>
                 </Menu>
             </Sider>
