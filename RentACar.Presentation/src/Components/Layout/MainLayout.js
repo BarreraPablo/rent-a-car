@@ -1,7 +1,8 @@
 import {
     CarOutlined, FileOutlined,
     TeamOutlined,
-    UserOutlined
+    UserOutlined,
+    SettingOutlined
 } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
 import { useState } from 'react';
@@ -43,14 +44,31 @@ function MainLayout({children}) {
                             Clients
                         </NavLink>
                     </Menu.Item>
-                    <SubMenu key="sub1" icon={<UserOutlined />} title="User">
-                        <Menu.Item key="4">Item1</Menu.Item>
-                        <Menu.Item key="5">Item2</Menu.Item>
-                        <Menu.Item key="6">Item3</Menu.Item>
+                    <SubMenu key="sub1" icon={<SettingOutlined />} title="Settings ">
+                        <Menu.Item key="4">
+                            <NavLink to="/bodytypes">
+                                    Body Types
+                            </NavLink>
+                        </Menu.Item>
+                        <Menu.Item key="5">
+                            <NavLink to="/brands">
+                                Brands
+                            </NavLink>
+                        </Menu.Item>
+                        <Menu.Item key="6">
+                            <NavLink to="/paymentypes">
+                                Payment Types
+                            </NavLink>
+                        </Menu.Item>
+                        <Menu.Item key="7">
+                            <NavLink to="/documentypes">
+                                Document Types
+                            </NavLink>
+                        </Menu.Item>
                     </SubMenu>
-                    <SubMenu key="sub3" icon={<TeamOutlined />} title="General">
-                        <Menu.Item key="7">Brands</Menu.Item>
-                        <Menu.Item key="8">Payment Methods</Menu.Item>
+                    <SubMenu key="sub2" icon={<TeamOutlined />} title="User">
+                        <Menu.Item key="8">Settings</Menu.Item>
+                        <Menu.Item key="9">Log Out</Menu.Item>
                     </SubMenu>
                 </Menu>
             </Sider>
