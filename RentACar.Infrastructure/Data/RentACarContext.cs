@@ -213,7 +213,7 @@ namespace RentACar.Infrastructure.Data
 
                 entity.Property(e => e.Name)
                     .IsRequired()
-                    .HasMaxLength(15)
+                    .HasMaxLength(25)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Description)
