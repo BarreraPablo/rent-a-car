@@ -16,6 +16,7 @@ import Client from "./Pages/Client/Client";
 import ClientForm from "./Pages/Client/ClientForm/ClientForm";
 import BodyType from "./Pages/BodyTypes/BodyType";
 import Brand from "./Pages/Brands/Brand";
+import PaymentType from "./Pages/PaymentTypes/PaymentType";
 
 function App() {
     return (
@@ -31,6 +32,7 @@ function App() {
                         <Route exact path="/clients" component={Client} />
                         <Route exact path="/bodytypes" component={BodyType} />
                         <Route exact path="/brands" component={Brand} />
+                        <Route exact path="/paymentypes" component={PaymentType} />
                     </MainLayout>
                 </PrivateRoute>
                 <Route exact path={["/", "/login"]} component={Login} />
