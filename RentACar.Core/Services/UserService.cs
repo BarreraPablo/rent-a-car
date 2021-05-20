@@ -1,4 +1,5 @@
-﻿using RentACar.Core.Entities;
+﻿using RentACar.Core.DTOs.UserDTOs;
+using RentACar.Core.Entities;
 using RentACar.Core.Exceptions;
 using RentACar.Core.Interfaces;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace RentACar.Core.Services
             this.unitOfWork = unitOfWork;
         }
 
-        public async Task<User> GetByUsername(UserLogin userLogin)
+        public async Task<User> GetByUsername(UserLoginDto userLogin)
         {
             if(userLogin == null)
             {

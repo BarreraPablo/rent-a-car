@@ -1,4 +1,5 @@
 ﻿using Moq;
+using RentACar.Core.DTOs.UserDTOs;
 using RentACar.Core.Entities;
 using RentACar.Core.Exceptions;
 using RentACar.Core.Interfaces;
@@ -60,7 +61,7 @@ namespace RentACar.UnitTest
             var userService = new UserService(unitOfWorkMock.Object);
             unitOfWorkMock.Setup(u => u.UserRepository.GetByUsername(It.IsAny<string>())).ReturnsAsync(new User());
 
-            await userService.GetByUsername(new UserLogin() { });
+            await userService.GetByUsername(new UserLoginDto() { });
 
             unitOfWorkMock.Verify(u => u.UserRepository.GetByUsername(It.IsAny<string>()), Times.Once);
         }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using RentACar.Core.DTOs.UserDTOs;
 using RentACar.Core.Entities;
 using RentACar.Core.Interfaces;
 using RentACar.Infrastructure.Interfaces;
@@ -29,7 +30,7 @@ namespace RentACar.Api.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Authentication(UserLogin login)
+        public async Task<IActionResult> Authentication(UserLoginDto login)
         {
             var validation = await IsValidUser(login);
             if (validation.Item1)
@@ -42,7 +43,7 @@ namespace RentACar.Api.Controllers
         }
 
 
-        private async Task<(bool, User)> IsValidUser(UserLogin login)
+        private async Task<(bool, User)> IsValidUser(UserLoginDto login)
         {
             var user = await userService.GetByUsername(login);
             if(user == null)
