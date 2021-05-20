@@ -41,11 +41,11 @@ namespace RentACar.UnitTest.CarModule
                 };
 
 
-            unitOfWork.Setup(m => m.CarRepository.GetAll()).Returns(objectsList);
+            unitOfWork.Setup(m => m.CarRepository.GetAllWith(It.IsAny<bool>(), It.IsAny<bool>(), It.IsAny<bool>())).Returns(objectsList);
 
-            carService.GetAll();
+            carService.GetAll(false);
 
-            unitOfWork.Verify(u => u.CarRepository.GetAll(), Times.Once);
+            unitOfWork.Verify(u => u.CarRepository.GetAllWith(It.IsAny<bool>(), It.IsAny<bool>(), It.IsAny<bool>()), Times.Once);
         }
 
         [Fact]
