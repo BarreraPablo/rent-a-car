@@ -16,6 +16,7 @@ namespace RentACar.Api
 {
     public class Startup
     {
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -98,6 +99,8 @@ namespace RentACar.Api
                  options => options
                  .AllowAnyMethod()
                  .AllowAnyHeader()
+                 .SetIsOriginAllowed(origin => true) 
+                 .AllowCredentials() 
              );
             app.UseAuthentication();
             app.UseAuthorization();
