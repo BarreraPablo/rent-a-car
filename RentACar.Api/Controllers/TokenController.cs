@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using RentACar.Core.DTOs.UserDTOs;
@@ -8,6 +9,7 @@ using RentACar.Infrastructure.Interfaces;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,73 +19,83 @@ namespace RentACar.Api.Controllers
     [ApiController]
     public class TokenController : ControllerBase
     {
-        private readonly IConfiguration Configuration;
         private readonly IUserService userService;
         private readonly IPasswordService passwordService;
+        private readonly ITokenService tokenService;
 
-        public TokenController(IConfiguration configuration, IUserService userService, IPasswordService passwordHasher)
+        public TokenController(IUserService userService, IPasswordService passwordHasher, ITokenService tokenService)
         {
-            this.Configuration = configuration;
             this.userService = userService;
             this.passwordService = passwordHasher;
+            this.tokenService = tokenService;
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> Authentication(UserLoginDto login)
+        public async Task<IActionResult> Authentication(UserLoginReqDto login)
         {
             var validation = await IsValidUser(login);
             if (validation.Item1)
             {
-                var token = GenerateToken(validation.Item2);
+                var token = tokenService.GenerateToken(validation.Item2);
+                RefreshToken refreshToken = tokenService.GenerateRefreshToken(IpAddress());
+                refreshToken.UserId = validation.Item2.Id;
+
+                await tokenService.SaveRefreshToken(refreshToken);
+
+                SetTokenCookie(refreshToken.Token);
                 return Ok(new { token = token }); 
             }
 
             return Unauthorized();
         }
 
+        [HttpPost("refreshToken")]
+        public async Task<IActionResult> RefreshToken()
+        {
+            var refreshToken = Request.Cookies["refreshToken"];
+            UserLoginResDto tokens = await tokenService.GenerateTokenAndRefreshToken(refreshToken, IpAddress());
 
-        private async Task<(bool, User)> IsValidUser(UserLoginDto login)
+            if(tokens == null)
+            {
+                return Unauthorized();
+            }
+
+            SetTokenCookie(tokens.RefreshToken);
+
+            return Ok(new { Token = tokens.JwtToken });
+        }
+
+
+        private async Task<(bool, User)> IsValidUser(UserLoginReqDto login)
         {
             var user = await userService.GetByUsername(login);
-            if(user == null)
+            if (user == null)
             {
                 return (false, user);
             }
 
-            var isValid = passwordService.Check(user.Password, login.Password);
+            bool isValid = passwordService.Check(user.Password, login.Password);
 
             return (isValid, user);
         }
 
-        private string GenerateToken(User user)
+        private void SetTokenCookie(string token)
         {
-            // Header
-            var _symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["AuthOptions:SecretKey"]));
-            var signingCredentials = new SigningCredentials(_symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
-            var header = new JwtHeader(signingCredentials);
-
-            // Claims
-            var claims = new[]
+            var cookieOptions = new CookieOptions
             {
-                new Claim(ClaimTypes.Name, user.Username),
-                new Claim("Id", user.Id.ToString()),
-                new Claim(ClaimTypes.Email, user.EmailAddress),
-                new Claim(ClaimTypes.Role, user.Role.ToString()),
+                HttpOnly = true,
+                Expires = DateTime.UtcNow.AddDays(7)
             };
+            Response.Cookies.Append("refreshToken", token, cookieOptions);
+        }
 
-            // Payload
-            var payload = new JwtPayload(
-                Configuration["AuthOptions:Issuer"],
-                Configuration["AuthOptions:Audience"],
-                claims,
-                DateTime.Now,
-                DateTime.UtcNow.AddMinutes(10)
-                );
-
-            var token = new JwtSecurityToken(header, payload);
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
+        private string IpAddress()
+        {
+            if (Request.Headers.ContainsKey("X-Forwarded-For"))
+                return Request.Headers["X-Forwarded-For"];
+            else
+                return HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
         }
     }
 }
