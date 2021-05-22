@@ -15,7 +15,7 @@ namespace RentACar.Core.Services
             this.unitOfWork = unitOfWork;
         }
 
-        public async Task<User> GetByUsername(UserLoginDto userLogin)
+        public async Task<User> GetByUsername(UserLoginReqDto userLogin)
         {
             if(userLogin == null)
             {
