@@ -15,7 +15,7 @@ namespace RentACar.Infrastructure.Repositories
 
         public async Task<RefreshToken> GetByToken(string token)
         {
-            return await entities.SingleOrDefaultAsync(r => r.Token == token);
+            return await entities.SingleAsync(r => r.Token == token);
         }
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using RentACar.Core.DTOs.UserDTOs;
 using RentACar.Core.Entities;
+using RentACar.Core.Exceptions;
 using RentACar.Core.Interfaces;
 using RentACar.Infrastructure.Interfaces;
 using System;
@@ -37,14 +38,11 @@ namespace RentACar.Api.Controllers
             var validation = await IsValidUser(login);
             if (validation.Item1)
             {
-                var token = tokenService.GenerateToken(validation.Item2);
-                RefreshToken refreshToken = tokenService.GenerateRefreshToken(IpAddress());
-                refreshToken.UserId = validation.Item2.Id;
+                var tokens = await tokenService.GetAuthTokens(validation.Item2, IpAddress());
 
-                await tokenService.SaveRefreshToken(refreshToken);
+                SetTokenCookie(tokens.RefreshToken);
 
-                SetTokenCookie(refreshToken.Token);
-                return Ok(new { token = token }); 
+                return Ok(new { Token = tokens.JwtToken }); 
             }
 
             return Unauthorized();
@@ -54,11 +52,17 @@ namespace RentACar.Api.Controllers
         public async Task<IActionResult> RefreshToken()
         {
             var refreshToken = Request.Cookies["refreshToken"];
-            UserLoginResDto tokens = await tokenService.GenerateTokenAndRefreshToken(refreshToken, IpAddress());
+
+            if (String.IsNullOrWhiteSpace(refreshToken))
+            {
+                throw new ArgumentNotDefinedException();
+            }
+
+            UserLoginResDto tokens = await tokenService.ProcessRefreshToken(refreshToken, IpAddress());
 
             if(tokens == null)
             {
-                return Unauthorized();
+                return Forbid();
             }
 
             SetTokenCookie(tokens.RefreshToken);

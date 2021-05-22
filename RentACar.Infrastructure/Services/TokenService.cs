@@ -2,6 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using RentACar.Core.DTOs.UserDTOs;
 using RentACar.Core.Entities;
+using RentACar.Core.Exceptions;
 using RentACar.Core.Interfaces;
 using RentACar.Infrastructure.Interfaces;
 using System;
@@ -26,20 +27,29 @@ namespace RentACar.Infrastructure.Services
             this.Configuration = configuration;
         }
 
-        public async Task SaveRefreshToken(RefreshToken refreshToken)
+        public async Task<UserLoginResDto> GetAuthTokens(User user, string ipAddress)
         {
-            if(refreshToken == null)
-            {
-                throw new ArgumentNullException();
-            }
+            var token = GenerateToken(user);
+
+            RefreshToken refreshToken = GenerateRefreshToken(ipAddress);
+            refreshToken.UserId = user.Id;
 
             await unitOfWork.RefreshTokenRepository.Add(refreshToken);
-            await unitOfWork.SaveChangesAsync();
+            unitOfWork.SaveChanges();
+
+            return new UserLoginResDto { JwtToken = token, RefreshToken = refreshToken.Token };
+
         }
 
-        public async Task<UserLoginResDto> GenerateTokenAndRefreshToken(string token, string ipAddress)
+        public async Task<UserLoginResDto> ProcessRefreshToken(string token, string ipAddress)
         {
-            RefreshToken refreshToken = await unitOfWork.RefreshTokenRepository.GetByToken(token);
+            if (String.IsNullOrWhiteSpace(token) || String.IsNullOrWhiteSpace(ipAddress))
+            {
+                throw new ArgumentNotDefinedException();
+            }
+
+            RefreshToken refreshToken = await unitOfWork.RefreshTokenRepository.GetByToken(token); 
+
             User user = await unitOfWork.UserRepository.GetById(refreshToken.UserId);
 
             if (!refreshToken.IsActive) return null;
@@ -55,12 +65,17 @@ namespace RentACar.Infrastructure.Services
 
             var jwtToken = GenerateToken(user);
 
-            return new UserLoginResDto { JwtToken = jwtToken, RefreshToken = refreshToken.Token };
+            return new UserLoginResDto { JwtToken = jwtToken, RefreshToken = newRefreshToken.Token };
         }
 
 
-        public string GenerateToken(User user)
+        private string GenerateToken(User user)
         {
+            if (user == null)
+            {
+                throw new ArgumentNotDefinedException();
+            }
+
             // Header
             var _symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["AuthOptions:SecretKey"]));
             var signingCredentials = new SigningCredentials(_symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
@@ -89,7 +104,7 @@ namespace RentACar.Infrastructure.Services
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public RefreshToken GenerateRefreshToken(string ipAddress)
+        private RefreshToken GenerateRefreshToken(string ipAddress)
         {
             using (var rngCryptoServiceProvider = new RNGCryptoServiceProvider())
             {
