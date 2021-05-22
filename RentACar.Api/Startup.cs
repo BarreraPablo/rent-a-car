@@ -94,12 +94,14 @@ namespace RentACar.Api
 
             app.UseRouting();
 
+            app.UseCors(
+                 options => options
+                 .AllowAnyMethod()
+                 .AllowAnyHeader()
+             );
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseCors(
-                 options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
-             );
 
             app.UseEndpoints(endpoints =>
             {
