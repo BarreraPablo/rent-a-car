@@ -53,6 +53,7 @@ namespace RentACar.Infrastructure.Extensions
             services.AddScoped<ICountryService, CountryService>();
             services.AddScoped<IClientService, ClientService>();
             services.AddScoped<IReservationService, ReservationService>();
+            services.AddScoped<ITokenService, TokenService>();
 
             return services;
         }
