@@ -22,6 +22,8 @@ namespace RentACar.Core.Interfaces
 
         IReservationRepository ReservationRepository { get; }
 
+        IRefreshTokenRepository RefreshTokenRepository { get; }
+
         void Dispose();
 
         void SaveChanges();

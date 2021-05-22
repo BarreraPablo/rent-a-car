@@ -16,6 +16,7 @@ namespace RentACar.Infrastructure.Repositories
         private ICountryRepository _countryRepository;
         private IClientRepository _clientRepository;
         private IReservationRepository _reservationRepository;
+        private IRefreshTokenRepository _refreshTokenRepository;
 
         public UnitOfWork(RentACarContext context)
         {
@@ -126,6 +127,18 @@ namespace RentACar.Infrastructure.Repositories
                     _reservationRepository = new ReservationRepository(context);
                 }
                 return _reservationRepository;
+            }
+        }
+
+        public IRefreshTokenRepository RefreshTokenRepository
+        {
+            get
+            {
+                if(_refreshTokenRepository == null)
+                {
+                    _refreshTokenRepository = new RefreshTokenRepository(context);
+                }
+                return _refreshTokenRepository;
             }
         }
 
