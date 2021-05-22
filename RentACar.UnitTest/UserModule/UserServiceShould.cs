@@ -61,7 +61,7 @@ namespace RentACar.UnitTest
             var userService = new UserService(unitOfWorkMock.Object);
             unitOfWorkMock.Setup(u => u.UserRepository.GetByUsername(It.IsAny<string>())).ReturnsAsync(new User());
 
-            await userService.GetByUsername(new UserLoginDto() { });
+            await userService.GetByUsername(new UserLoginReqDto() { });
 
             unitOfWorkMock.Verify(u => u.UserRepository.GetByUsername(It.IsAny<string>()), Times.Once);
         }
