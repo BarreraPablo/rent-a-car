@@ -35,13 +35,14 @@ function useProvideAuth() {
         };
 
         return axios
-            .post(api_url + "token", bodyRequest)
+            .post(api_url + "token", bodyRequest, { withCredentials: true })
             .then((res) => {
                 if (remember) {
                     localStorage.setItem("token", res.data.token);
                     localStorage.setItem("username", username);
                 }
-                axios.defaults.headers.common["Authorization"] = "Bearer " + res.data.token;
+                axios.defaults.headers.common["Authorization"] =
+                    "Bearer " + res.data.token;
 
                 setUser({ username: username });
                 return Promise.resolve(res);
@@ -63,9 +64,10 @@ function useProvideAuth() {
         localStorage.removeItem("token");
     };
 
+
     return {
         user,
         signin,
-        signout
+        signout,
     };
 }

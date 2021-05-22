@@ -3,6 +3,45 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import axios from 'axios';
+
+const api_url = process.env.REACT_APP_API_URL;
+
+
+const createRefreshTokenInterceptor = () => {
+    axios.interceptors.response.use(
+        (response) => {
+            return response;
+        },
+        function (error) {
+            const originalRequest = error.config;
+            if (error.response.status === 401 && !originalRequest._retry) {
+                originalRequest._retry = true;
+
+                return axios.post(api_url + "token/refreshToken", {}, { withCredentials: true })
+                    .then((res) => {
+                        if (res.status === 200) {
+                            localStorage.setItem("token", res.data.token);
+
+                            axios.defaults.headers.common["Authorization"] = "Bearer " + res.data.token;
+                            originalRequest.headers["Authorization"] = "Bearer " + res.data.token;
+
+                            return axios(originalRequest);
+                        }
+                    })
+                    .catch((err) => {
+                        localStorage.removeItem("token");
+                        window.location = '/login';
+                        return Promise.reject(error);
+                    })
+            }
+
+            return Promise.reject(error);
+        }
+    );
+};
+
+createRefreshTokenInterceptor();
 
 ReactDOM.render(
   <React.StrictMode>
