@@ -7,6 +7,14 @@ import axios from 'axios';
 
 const api_url = process.env.REACT_APP_API_URL;
 
+const configureAxios = () => {
+    setBaseUrl();
+    createRefreshTokenInterceptor();
+}
+
+const setBaseUrl = () => {
+    axios.defaults.baseURL = api_url;
+}
 
 const createRefreshTokenInterceptor = () => {
     axios.interceptors.response.use(
@@ -41,7 +49,7 @@ const createRefreshTokenInterceptor = () => {
     );
 };
 
-createRefreshTokenInterceptor();
+configureAxios();
 
 ReactDOM.render(
   <React.StrictMode>

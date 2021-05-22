@@ -1,10 +1,8 @@
 import axios from "axios";
 
-const api_url = process.env.REACT_APP_API_URL;
-
 export const getCars = (onlyAvailable = false) => {
     return axios
-        .get(api_url + "car", {params: onlyAvailable})
+        .get("car", {params: onlyAvailable})
         .then((res) => {
             return Promise.resolve(res.data);
         })
@@ -15,7 +13,7 @@ export const getCars = (onlyAvailable = false) => {
 
 export const getById = (id) => {
     return axios
-        .get(api_url + `car/${id}`)
+        .get(`car/${id}`)
         .then((res) => {
             return Promise.resolve(res.data);
         })
@@ -44,7 +42,7 @@ export const saveCar = (car, action) => {
     console.log('cars service, car:', car, 'action', action);
     return axios({
         method: action === "new" ? "post" : "put",
-        url: api_url + "car",
+        url: "car",
         data: formdata,
     })
         .then(() => Promise.resolve())

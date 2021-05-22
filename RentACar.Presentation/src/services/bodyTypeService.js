@@ -1,10 +1,8 @@
 import axios from "axios";
 
-const api_url = process.env.REACT_APP_API_URL;
-
 export const getAll = () => {
     return axios
-        .get(api_url + "bodyType")
+        .get("bodyType")
         .then((res) => Promise.resolve(res.data))
         .catch(err => Promise.reject('Something gone wrong getting the body types'));
 };
@@ -14,7 +12,7 @@ export const save = (bodyType, action) => {
 
     return axios({
         method: action === "new" ? "post" : "put",
-        url: api_url + "bodytype",
+        url: "bodytype",
         data: bodyType,
     })
         .catch((err) => {

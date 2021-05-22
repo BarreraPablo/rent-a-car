@@ -1,8 +1,6 @@
 import axios from "axios";
 import React, { createContext, useContext, useState } from "react";
 
-const api_url = process.env.REACT_APP_API_URL;
-
 const authContext = createContext();
 
 export function ProvideAuth({ children }) {
@@ -35,7 +33,7 @@ function useProvideAuth() {
         };
 
         return axios
-            .post(api_url + "token", bodyRequest, { withCredentials: true })
+            .post("token", bodyRequest, { withCredentials: true })
             .then((res) => {
                 if (remember) {
                     localStorage.setItem("token", res.data.token);

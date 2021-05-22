@@ -1,10 +1,8 @@
 import axios from 'axios';
 
-const api_url = process.env.REACT_APP_API_URL;
-
 export const getAll = () => {
 
-    return axios.get(api_url + 'brand').then(res => {
+    return axios.get('brand').then(res => {
         return Promise.resolve(res.data);
     }).catch(err => Promise.reject('Something gone wrong getting the brands.'));
 }
@@ -15,7 +13,7 @@ export const save = (brand, action) => {
 
     return axios({
         method: action === "new" ? "post" : "put",
-        url: api_url + "brand",
+        url: "brand",
         data: brand,
     })
         .catch((err) => {

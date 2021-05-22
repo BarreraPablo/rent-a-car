@@ -1,10 +1,8 @@
 import axios from "axios";
 
-const api_url = process.env.REACT_APP_API_URL;
-
 export const getAll = () => {
     return axios
-        .get(api_url + "paymentType")
+        .get("paymentType")
         .then(res => Promise.resolve(res.data))
         .catch(err =>
             Promise.reject("Something gone wrong getting the payments types")
@@ -16,7 +14,7 @@ export const save = (paymentType, action) => {
 
     return axios({
         method: action === "new" ? "post" : "put",
-        url: api_url + "paymentType",
+        url: "paymentType",
         data: paymentType,
     })
         .catch((err) => {
