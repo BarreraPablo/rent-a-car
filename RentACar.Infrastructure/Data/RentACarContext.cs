@@ -28,6 +28,7 @@ namespace RentACar.Infrastructure.Data
         public virtual DbSet<PaymentType> PaymentType { get; set; }
         public virtual DbSet<Reservation> Reservations { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<RefreshToken> RefreshTokens { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -110,6 +111,26 @@ namespace RentACar.Infrastructure.Data
                     .HasForeignKey(d => d.BrandId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Car_Brand");
+            });
+
+            modelBuilder.Entity<RefreshToken>(entity =>
+            {
+                entity.ToTable("RefreshToken");
+
+                entity.Property(e => e.Id).HasColumnName("RefreshTokenId");
+
+                entity.Property(e => e.Revoked).HasColumnType("datetime");
+
+                entity.Property(e => e.Expires).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedAt).HasColumnType("datetime");
+
+                entity.Ignore(e => e.ModifiedAt);
+
+                entity.HasOne(u => u.User)
+                    .WithMany(r => r.RefreshToken)
+                    .HasForeignKey(u => u.UserId)
+                    .HasConstraintName("FK_RefreshToken_User");
             });
 
             modelBuilder.Entity<Client>(entity =>
