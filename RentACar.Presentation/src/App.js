@@ -18,6 +18,7 @@ import BodyType from "./Pages/BodyTypes/BodyType";
 import Brand from "./Pages/Brands/Brand";
 import PaymentType from "./Pages/PaymentTypes/PaymentType";
 import DocumentType from "./Pages/DocumentTypes/DocumentType";
+import RegisterForm from "./Pages/Register/Register";
 
 function App() {
     return (
@@ -37,6 +38,7 @@ function App() {
                         <Route exact path="/documentypes" component={DocumentType} />
                     </MainLayout>
                 </PrivateRoute>
+                <Route exact path="/register" component={RegisterForm} />
                 <Route exact path={["/", "/login"]} component={Login} />
             </Router>
         </ProvideAuth>

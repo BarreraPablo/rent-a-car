@@ -3,7 +3,7 @@ import { Form, Input, Button, Checkbox, Row, Col, Alert, Card } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import "./Login.css";
 import { useAuth } from "../../Hooks/useAuth";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 function Login() {
     return (
@@ -98,7 +98,7 @@ function LoginForm() {
                             <Checkbox>Remember me</Checkbox>
                         </Form.Item>
                     </Form.Item>
-
+                    
                     <Form.Item className="no-bottom-margin">
                         <Button
                             block
@@ -109,6 +109,7 @@ function LoginForm() {
                             {loading ? "Singing In" : "Sing In"}
                         </Button>
                     </Form.Item>
+                        You do not have an account?  <Link to="./register">Register now</Link><br/>
                 </Form>
             </Card>
         </>
