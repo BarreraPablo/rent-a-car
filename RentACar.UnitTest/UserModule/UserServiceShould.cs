@@ -37,7 +37,7 @@ namespace RentACar.UnitTest
 
             unitOfWorkMock.Setup(u => u.UserRepository.GetByEmail(It.IsAny<string>())).ReturnsAsync(new User() { });
 
-            await Assert.ThrowsAsync<BussinessException>(() => userService.RegisterUser(new User() { }));
+            await Assert.ThrowsAsync<BussinessException>(() => userService.RegisterUser(new User() { EmailAddress = "emailaddresstest@gmail.com" }));
         }
 
         [Fact]
