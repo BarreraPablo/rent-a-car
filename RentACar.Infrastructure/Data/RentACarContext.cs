@@ -305,7 +305,6 @@ namespace RentACar.Infrastructure.Data
                     .IsUnicode(false);
 
                 entity.Property(e => e.EmailAddress)
-                    .IsRequired()
                     .HasMaxLength(100)
                     .IsUnicode(false);
 

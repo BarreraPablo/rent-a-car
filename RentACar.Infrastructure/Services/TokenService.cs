@@ -86,7 +86,7 @@ namespace RentACar.Infrastructure.Services
             {
                 new Claim(ClaimTypes.Name, user.Username),
                 new Claim("Id", user.Id.ToString()),
-                new Claim(ClaimTypes.Email, user.EmailAddress),
+                new Claim(ClaimTypes.Email, user.EmailAddress ?? ""),
                 new Claim(ClaimTypes.Role, user.Role.ToString()),
             };
 

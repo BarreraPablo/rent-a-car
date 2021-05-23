@@ -8,7 +8,7 @@ namespace RentACar.Core.DTOs.UserDTOs
         [Required(ErrorMessage = "Username field is required")]
         [StringLength(20, ErrorMessage = "Username is too long (maximium is 20 characters)")]
         public string Username { get; set; }
-        [Required(ErrorMessage = "Email Address field is required")]
+
         [EmailAddress]
         public string EmailAddress { get; set; }
 
