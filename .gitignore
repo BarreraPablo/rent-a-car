@@ -373,3 +373,4 @@ RentACar.Core/obj
 .vs/RentACar/DesignTimeBuild
 .vs/RentACar/DesignTimeBuild
 *.env
+RentACar.Api/appsettings.Development.json
