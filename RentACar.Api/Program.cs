@@ -11,6 +11,7 @@ namespace RentACar.Api
         {
             var configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
+                .AddUserSecrets<Program>()
                 .Build();
 
             Log.Logger = new LoggerConfiguration()
