@@ -17,6 +17,7 @@ namespace RentACar.Infrastructure.Data
         public RentACarContext(DbContextOptions<RentACarContext> options)
             : base(options)
         {
+            Database.EnsureCreated();
         }
 
         public virtual DbSet<BodyType> BodyTypes { get; set; }
