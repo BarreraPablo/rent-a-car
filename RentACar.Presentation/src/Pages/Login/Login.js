@@ -1,9 +1,9 @@
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { Alert, Button, Card, Col, Form, Input, Row } from "antd";
 import React, { useState } from "react";
-import { Form, Input, Button, Checkbox, Row, Col, Alert, Card } from "antd";
-import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import "./Login.css";
-import { useAuth } from "../../Hooks/useAuth";
 import { Link, useHistory } from "react-router-dom";
+import { useAuth } from "../../Hooks/useAuth";
+import "./Login.css";
 
 function Login() {
     return (

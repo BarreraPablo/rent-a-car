@@ -1,9 +1,8 @@
+import { Button, Card, Col, Form, Input, Row } from "antd";
 import React, { useState } from "react";
-import { Form, Input, Button, Checkbox, Row, Col, Alert, Card } from "antd";
-import "./Register.css";
-import { useAuth } from "../../Hooks/useAuth";
-import * as userService from "../../services/userService";
 import { useHistory } from "react-router-dom";
+import * as userService from "../../services/userService";
+import "./Register.css";
 
 function Register() {
     return (

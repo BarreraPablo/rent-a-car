@@ -1,4 +1,8 @@
 import {
+    CloseCircleOutlined, EditOutlined,
+    SaveOutlined
+} from "@ant-design/icons";
+import {
     Button,
     Card,
     Form,
@@ -6,14 +10,8 @@ import {
     Popconfirm,
     Space,
     Table,
-    Tooltip,
-    Typography,
+    Tooltip
 } from "antd";
-import {
-    EditOutlined,
-    SaveOutlined,
-    CloseCircleOutlined,
-} from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import { EditableCell } from "../../Components/EditableCell/EditableCell";
 import * as paymentTypeService from "../../services/paymentTypeService";
