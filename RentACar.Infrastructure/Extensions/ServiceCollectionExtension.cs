@@ -20,7 +20,7 @@ namespace RentACar.Infrastructure.Extensions
         public static IServiceCollection AddDbContexts(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<RentACarContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("RentACar"))
+                options.UseSqlServer(configuration["ConnectionStrings:RentACar"])
             );
 
             return services;

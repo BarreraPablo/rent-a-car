@@ -366,7 +366,6 @@ RentACar.Core/obj/Debug
 RentACar.Infrastructure/bin/Debug/netcoreapp5.0
 RentACar.Infrastructure/obj/Debug
 RentACar.Api/bin
-RentACar.Api/appsettings.json
 RentACar.Api/obj
 RentACar.Infrastructure/obj
 RentACar.UnitTest/obj
