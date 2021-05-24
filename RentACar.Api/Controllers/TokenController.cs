@@ -45,7 +45,7 @@ namespace RentACar.Api.Controllers
                 return Ok(new { Token = tokens.JwtToken }); 
             }
 
-            return Unauthorized();
+            return Forbid();
         }
 
         [HttpPost("refreshToken")]

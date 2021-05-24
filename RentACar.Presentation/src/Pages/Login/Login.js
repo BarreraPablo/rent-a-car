@@ -22,13 +22,9 @@ function LoginForm() {
     let history = useHistory();
 
     const submit = (values) => {
-        if (loading) {
-            return;
-        }
-
         setLoading(true);
 
-        auth.signin(values.username, values.password, values.remember)
+        auth.signin(values.username, values.password)
             .then((res) => history.replace("/cars"))
             .catch((err) => {
                 setMessage(err.message);
@@ -43,9 +39,8 @@ function LoginForm() {
                     <Alert
                         message={message}
                         showIcon={false}
-                        closable={true}
                         type="error"
-                    />{" "}
+                    />
                     <br />
                 </>
             ) : null}
@@ -88,28 +83,19 @@ function LoginForm() {
                             placeholder="Password"
                         />
                     </Form.Item>
-
-                    <Form.Item>
-                        <Form.Item
-                            name="remember"
-                            valuePropName="checked"
-                            noStyle
-                        >
-                            <Checkbox>Remember me</Checkbox>
-                        </Form.Item>
-                    </Form.Item>
                     
+                        You do not have an account?  <Link to="./register">Register now</Link><br/>
                     <Form.Item className="no-bottom-margin">
                         <Button
                             block
                             type="primary"
                             htmlType="submit"
                             className="login-form-button"
+                            loading={loading}
                         >
                             {loading ? "Singing In" : "Sing In"}
                         </Button>
                     </Form.Item>
-                        You do not have an account?  <Link to="./register">Register now</Link><br/>
                 </Form>
             </Card>
         </>

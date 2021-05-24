@@ -35,10 +35,9 @@ function useProvideAuth() {
         return axios
             .post("token", bodyRequest, { withCredentials: true })
             .then((res) => {
-                if (remember) {
-                    localStorage.setItem("token", res.data.token);
-                    localStorage.setItem("username", username);
-                }
+                localStorage.setItem("token", res.data.token);
+                localStorage.setItem("username", username);
+
                 axios.defaults.headers.common["Authorization"] =
                     "Bearer " + res.data.token;
 
@@ -46,7 +45,7 @@ function useProvideAuth() {
                 return Promise.resolve(res);
             })
             .catch((err) => {
-                if (err.response && err.response.status === 401) {
+                if (err.response && err.response.status === 403) {
                     return Promise.reject(
                         new Error("Incorrect username or password")
                     );
