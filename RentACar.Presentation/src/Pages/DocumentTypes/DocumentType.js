@@ -167,7 +167,7 @@ function DocumentType() {
 
     return (
         <div className="site-card-border-less-wrapper">
-            <Card title="Body Types Managment" bordered={false}>
+            <Card title="Document Types Managment" bordered={false}>
                 <Button
                     onClick={handleAdd}
                     type="primary"
@@ -175,7 +175,7 @@ function DocumentType() {
                         marginBottom: 16,
                     }}
                 >
-                    Add a Body Type
+                    Add a Document Type
                 </Button>
                 <Form form={form} component={false}>
                     <Table
