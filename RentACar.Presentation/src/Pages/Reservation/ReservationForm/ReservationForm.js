@@ -33,6 +33,7 @@ function ReservationForm() {
     const [clients, setClients] = useState([]);
     const [cars, setCars] = useState([]);
     const [paymentTypes, setPaymentTypes] = useState([]);
+    const [editable, setEditable] = useState(false);
 
     useEffect(() => {
         getFormData();
@@ -72,7 +73,8 @@ function ReservationForm() {
         reservationService
             .getById(id)
             .then((res) => {
-                console.log("res", res);
+                setEditable(res.status !== "Finished")
+
                 form.setFieldsValue({
                     clientId: res.client.id,
                     carId: res.car.id,
@@ -88,7 +90,6 @@ function ReservationForm() {
         clientService
             .getAll()
             .then((res) => {
-                console.log("clients", res);
                 setClients(res);
             })
             .catch((err) => message.error(err));
@@ -122,7 +123,6 @@ function ReservationForm() {
     };
 
     const onFinish = (values) => {
-        console.log("onFinish", values);
         const rangeValue = values["range-picker"];
         setLoading(true);
 
@@ -290,6 +290,7 @@ function ReservationForm() {
                                     type="primary"
                                     size="large"
                                     block
+                                    disabled={!editable}
                                     hidden={action !== SHOW}
                                     onClick={setEdit}
                                 >
