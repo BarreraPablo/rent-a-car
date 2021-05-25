@@ -71,5 +71,13 @@ namespace RentACar.Api.Controllers
 
             return NoContent();
         }
+
+        [HttpPut("finish/{id}")]
+        public async Task<IActionResult> FinishRental(long id)
+        {
+            await reservationService.Finish(id);
+
+            return NoContent();
+        }
     }
 }

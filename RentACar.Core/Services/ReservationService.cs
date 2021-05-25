@@ -1,4 +1,5 @@
 ﻿using RentACar.Core.Entities;
+using RentACar.Core.Enumerations;
 using RentACar.Core.Exceptions;
 using RentACar.Core.Interfaces;
 using System;
@@ -57,6 +58,26 @@ namespace RentACar.Core.Services
             reservation.calculateTotal();
 
             await unitOfWork.ReservationRepository.CheckAndUpdate(existentReservation, reservation);
+            await unitOfWork.SaveChangesAsync();
+        }
+
+        public async Task Finish(long id)
+        {
+            Reservation reservation = await unitOfWork.ReservationRepository.GetById(id);
+
+            if(reservation == null)
+            {
+                throw new NullEntityException();
+            }
+
+            if(reservation.Status != ReservationStatus.Paid)
+            {
+                throw new BussinessException("The reservation must be paid");
+            }
+
+            reservation.Status = ReservationStatus.Finished;
+
+            await unitOfWork.ReservationRepository.Update(reservation);
             await unitOfWork.SaveChangesAsync();
         }
     }
