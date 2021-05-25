@@ -1,7 +1,7 @@
 // import logo from './logo.svg';
 import "antd/dist/antd.css";
 import {
-    BrowserRouter as Router,
+    HashRouter as Router,
     Route
 } from "react-router-dom";
 import MainLayout from "./Components/Layout/MainLayout";
@@ -23,7 +23,7 @@ import RegisterForm from "./Pages/Register/Register";
 function App() {
     return (
         <ProvideAuth>
-            <Router>
+            <Router basename={process.env.PUBLIC_URL}>
                 <PrivateRoute path={["/cars", "/reservations", "/clients", "/bodyTypes", "/brands", "/documentypes", "/paymentypes"]}>
                     <MainLayout >
                         <Route exact path={['/cars/new', '/cars/edit/:id', '/cars/show/:id']} component={CarForm} />
