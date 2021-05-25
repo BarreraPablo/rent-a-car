@@ -1,11 +1,13 @@
-name: ReactAppCI
+name: React App CI
 on:
   push:
     branches:
       - main
 jobs:
-  build:
+  build_and_deploy:
     runs-on: ubuntu-latest
+    env:
+      working-directory: ./RentACar.Presentation
     strategy:
       matrix:
         node-version: [14.x]
@@ -17,11 +19,13 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: Install Packages
       run: npm install
+      working-directory: ${{env.working-directory}}
     - name: Deploy to GH Pages
       run: |
         git config --global user.email ${{secrets.GIT_EMAIL}}
         git config --global user.name ${{secrets.GIT_USERNAME}}
         git remote set-url origin https://${{secrets.GIT_PERSONAL_TOKEN}}@github.com/${{secrets.GIT_USERNAME}}/rent-a-car.git
         npm run deploy
+      working-directory: ${{env.working-directory}}
       env:
         REACT_APP_API_URL: ${{secrets.REACT_APP_API_URL}}
