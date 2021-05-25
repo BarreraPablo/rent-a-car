@@ -69,8 +69,7 @@ function MainLayout({children}) {
                         </Menu.Item>
                     </SubMenu>
                     <SubMenu key="sub2" icon={<TeamOutlined />} title="User">
-                        <Menu.Item key="8">Settings</Menu.Item>
-                        <Menu.Item key="9" onClick={auth.signout}>Log Out</Menu.Item>
+                        <Menu.Item key="8" onClick={auth.signout}>Log Out</Menu.Item>
                     </SubMenu>
                 </Menu>
             </Sider>
@@ -83,7 +82,7 @@ function MainLayout({children}) {
                     {children}
                 </Content>
                 <Footer className="background-layout-color" style={{ textAlign: "center" }}>
-                    Creado por Pablo Barrera
+                    Created by Pablo Barrera
                 </Footer>
             </Layout>
         </Layout>
