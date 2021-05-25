@@ -13,8 +13,7 @@ namespace RentACar.Core.DTOs.ReservationDTOs
         [Range(1, long.MaxValue, ErrorMessage = "The specified car is wrong")]
         public long CarId { get; set; }
 
-        [Required]
-        [Range(1, long.MaxValue, ErrorMessage = "It's necessary to specify if the reservation is paid or not")]
+        [Required(ErrorMessage = "It's necessary to specify if the reservation is paid or not")]
         public bool Paid { get; set; }
 
         [Required]

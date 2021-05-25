@@ -167,7 +167,7 @@ function PaymentType() {
 
     return (
         <div className="site-card-border-less-wrapper">
-            <Card title="Body Types Managment" bordered={false}>
+            <Card title="Payment Types Managment" bordered={false}>
                 <Button
                     onClick={handleAdd}
                     type="primary"
@@ -175,7 +175,7 @@ function PaymentType() {
                         marginBottom: 16,
                     }}
                 >
-                    Add a Body Type
+                    Add a Payment Type
                 </Button>
                 <Form form={form} component={false}>
                     <Table
