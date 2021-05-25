@@ -38,6 +38,12 @@ namespace RentACar.Infrastructure.Repositories
             entity.CreatedAt = DateTime.Now;
             entities.Add(entity);
         }
+
+        public async Task Update(T entity)
+        {
+            entity.ModifiedAt = DateTime.Now;
+        }
+
         public async Task CheckAndUpdate(T entity, T entityWithChanges)
         {
             if (entity == null || entityWithChanges == null)

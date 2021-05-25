@@ -10,5 +10,6 @@ namespace RentACar.Core.Interfaces
         Task Create(Reservation reservation);
         IEnumerable<Reservation> GetReservations();
         Task Update(Reservation reservation);
+        Task Finish(long id);
     }
 }

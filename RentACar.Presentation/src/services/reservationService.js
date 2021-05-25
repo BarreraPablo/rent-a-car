@@ -33,3 +33,13 @@ export const save = (reservation, action) => {
 
     })
 };
+
+export const finish = (id) => {
+    return axios.put(`reservation/finish/${id}`).catch(err => {
+        if(err.response && err.response.status === 400) {
+            return Promise.reject(err.response.data.bussinessValidation[0]);
+        }
+
+        return Promise.reject("Something gone wrong finishing the car")
+    })
+}
