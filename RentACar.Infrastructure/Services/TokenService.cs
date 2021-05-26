@@ -27,11 +27,11 @@ namespace RentACar.Infrastructure.Services
             this.Configuration = configuration;
         }
 
-        public async Task<UserLoginResDto> GetAuthTokens(User user, string ipAddress)
+        public async Task<UserLoginResDto> GetAuthTokens(User user)
         {
             var token = GenerateToken(user);
 
-            RefreshToken refreshToken = GenerateRefreshToken(ipAddress);
+            RefreshToken refreshToken = GenerateRefreshToken();
             refreshToken.UserId = user.Id;
 
             await unitOfWork.RefreshTokenRepository.Add(refreshToken);
@@ -41,9 +41,9 @@ namespace RentACar.Infrastructure.Services
 
         }
 
-        public async Task<UserLoginResDto> ProcessRefreshToken(string token, string ipAddress)
+        public async Task<UserLoginResDto> ProcessRefreshToken(string token)
         {
-            if (String.IsNullOrWhiteSpace(token) || String.IsNullOrWhiteSpace(ipAddress))
+            if (String.IsNullOrWhiteSpace(token))
             {
                 throw new ArgumentNotDefinedException();
             }
@@ -54,11 +54,10 @@ namespace RentACar.Infrastructure.Services
 
             if (!refreshToken.IsActive) return null;
 
-            var newRefreshToken = GenerateRefreshToken(ipAddress);
+            var newRefreshToken = GenerateRefreshToken();
             newRefreshToken.UserId = user.Id;
 
             refreshToken.Revoked = DateTime.UtcNow;
-            refreshToken.RevokedByIp = ipAddress;
             refreshToken.ReplacedByToken = newRefreshToken.Token;
             await unitOfWork.RefreshTokenRepository.Add(newRefreshToken);
             unitOfWork.SaveChanges();
@@ -104,7 +103,7 @@ namespace RentACar.Infrastructure.Services
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        private RefreshToken GenerateRefreshToken(string ipAddress)
+        private RefreshToken GenerateRefreshToken()
         {
             using (var rngCryptoServiceProvider = new RNGCryptoServiceProvider())
             {
@@ -114,8 +113,7 @@ namespace RentACar.Infrastructure.Services
                 {
                     Token = Convert.ToBase64String(randomBytes),
                     Expires = DateTime.UtcNow.AddDays(7),
-                    CreatedAt = DateTime.UtcNow,
-                    CreatedByIp = ipAddress
+                    CreatedAt = DateTime.UtcNow
                 };
             }
         }

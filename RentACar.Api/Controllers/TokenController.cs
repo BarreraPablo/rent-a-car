@@ -38,7 +38,7 @@ namespace RentACar.Api.Controllers
             var validation = await IsValidUser(login);
             if (validation.Item1)
             {
-                var tokens = await tokenService.GetAuthTokens(validation.Item2, IpAddress());
+                var tokens = await tokenService.GetAuthTokens(validation.Item2);
 
                 SetTokenCookie(tokens.RefreshToken);
 
@@ -58,7 +58,7 @@ namespace RentACar.Api.Controllers
                 throw new ArgumentNotDefinedException();
             }
 
-            UserLoginResDto tokens = await tokenService.ProcessRefreshToken(refreshToken, IpAddress());
+            UserLoginResDto tokens = await tokenService.ProcessRefreshToken(refreshToken);
 
             if(tokens == null)
             {
