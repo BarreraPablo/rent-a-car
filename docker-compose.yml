@@ -1,0 +1,28 @@
+version: "3.7"
+services:
+  sql-server:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    volumes: 
+      - ./rentacar-data:/var/lib/sqlserver
+    ports:
+      - 1433:1433
+    environment:
+      ACCEPT_EULA: 'Y'
+      SA_PASSWORD: PassForTest123.
+  dotnetcore_api:
+    image: pmbarrera/rentacarback:v2
+    environment: 
+      - ConnectionStrings__RentACar=Server=sql-server;Database=RentACar;User Id=sa;Password=PassForTest123.;
+      - Serilog__WriteTo__0__Args__connectionString=Server=sql-server;Database=RentACar;User Id=sa;Password=PassForTest123.;
+      - PasswordOptions__SaltSize=15
+      - PasswordOptions__KeySize=15
+      - PasswordOptions__Iterations=5000
+      - AuthOptions__SecretKey=ajwtsecretfortest1231231231212412
+      - ImageOptions__CarsImagesFolder=wwwroot/images/
+    ports:
+      - 5001:5001
+      - 5000:5000
+  web-react:
+    image: pmbarrera/rentacar_front:latest
+    ports:
+      - 8000:80
