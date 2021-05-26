@@ -22,6 +22,7 @@ function BodyType() {
     const [data, setData] = useState([]);
     const [editingKey, setEditingKey] = useState("");
     const [loading, setLoading] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1)
 
     useEffect(() => {
         refreshTable();
@@ -46,10 +47,11 @@ function BodyType() {
             .catch((err) => message.error(err));
     };
 
-    const cancel = (id) => {
-        if (id === -1) {
-            const newData = [...data];
-            const index = newData.findIndex((item) => id === item.id);
+    const cancel = () => {
+        const newData = [...data];
+        const index = newData.findIndex((item) => -1 === item.id); // search for the not saved new record
+
+        if(index !== -1) {
             newData.splice(index, 1);
             setData(newData);
         }
