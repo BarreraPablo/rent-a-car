@@ -319,6 +319,7 @@ export function CarForm() {
                                     <Form.Item
                                         name="image"
                                         label="Upload"
+                                        hidden={action === SHOW}
                                         valuePropName="fileList"
                                         getValueFromEvent={normFile}
                                     >
