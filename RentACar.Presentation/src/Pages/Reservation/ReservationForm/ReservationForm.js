@@ -250,7 +250,7 @@ function ReservationForm() {
 
                             <Form.Item
                                 name="range-picker"
-                                label="RangePicker"
+                                label="Period"
                                 {...rangeConfig}
                             >
                                 <RangePicker
