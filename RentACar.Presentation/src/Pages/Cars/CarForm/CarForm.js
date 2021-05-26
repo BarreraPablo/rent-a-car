@@ -126,12 +126,11 @@ export function CarForm() {
         input: {
             bordered: action !== SHOW,
             disabled: action === SHOW,
-            className: "disabled-input",
         },
         select: {
             bordered: action !== SHOW,
             showArrow: action !== SHOW,
-            open: action === SHOW ? false : undefined,
+            disabled: action === SHOW,
         },
     };
 

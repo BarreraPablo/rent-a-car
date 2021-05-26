@@ -2,19 +2,8 @@
     margin: 15px 0 15px 0
 }
 
-.descriptions {
-    max-width: 50%;
-}
-
-.ant-input[disabled].disabled-input {
-    color: black;
-}
-
-.disabled-input {
-    color: black !important;
-}
-
-.ant-input-number-disabled.disabled-input {
+.ant-input-number-disabled {
     background-color: transparent;
-    color: black;
 }
+
+
