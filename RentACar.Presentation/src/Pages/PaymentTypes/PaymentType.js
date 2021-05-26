@@ -22,6 +22,7 @@ function PaymentType() {
     const [data, setData] = useState([]);
     const [editingKey, setEditingKey] = useState("");
     const [loading, setLoading] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1)
 
     useEffect(() => {
         refreshTable();
@@ -46,10 +47,11 @@ function PaymentType() {
             .catch((err) => message.error(err));
     };
 
-    const cancel = (id) => {
-        if (id === -1) {
-            const newData = [...data];
-            const index = newData.findIndex((item) => id === item.id);
+    const cancel = () => {
+        const newData = [...data];
+        const index = newData.findIndex((item) => -1 === item.id); // search for the not saved new record
+
+        if(index !== -1) {
             newData.splice(index, 1);
             setData(newData);
         }
@@ -156,6 +158,7 @@ function PaymentType() {
     });
 
     const handleAdd = () => {
+        setCurrentPage(1);
         const newData = {
             id: -1,
             name: "",
@@ -165,12 +168,18 @@ function PaymentType() {
         setData([newData, ...data]);
     };
 
+    const onPageChange = (page) => {
+        setCurrentPage(page);
+        cancel();
+    }
+
     return (
         <div className="site-card-border-less-wrapper">
             <Card title="Payment Types Managment" bordered={false}>
                 <Button
                     onClick={handleAdd}
                     type="primary"
+                    disabled={editingKey !== ""}
                     style={{
                         marginBottom: 16,
                     }}
@@ -189,7 +198,8 @@ function PaymentType() {
                         columns={mergedColumns}
                         rowClassName="editable-row"
                         pagination={{
-                            onChange: cancel,
+                            onChange: onPageChange,
+                            current: currentPage,
                         }}
                     />
                 </Form>
