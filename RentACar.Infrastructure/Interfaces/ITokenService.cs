@@ -6,7 +6,7 @@ namespace RentACar.Infrastructure.Interfaces
 {
     public interface ITokenService
     {
-        Task<UserLoginResDto> ProcessRefreshToken(string token, string ipAddress);
-        Task<UserLoginResDto> GetAuthTokens(User user, string ipAddress);
+        Task<UserLoginResDto> ProcessRefreshToken(string token);
+        Task<UserLoginResDto> GetAuthTokens(User user);
     }
 }
