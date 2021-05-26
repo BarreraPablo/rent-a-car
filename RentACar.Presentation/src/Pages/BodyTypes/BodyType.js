@@ -170,6 +170,7 @@ function BodyType() {
             <Card title="Body Types Managment" bordered={false}>
                 <Button
                     onClick={handleAdd}
+                    disabled={editingKey !== ""}
                     type="primary"
                     style={{
                         marginBottom: 16,
