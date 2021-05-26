@@ -95,7 +95,7 @@ namespace RentACar.Infrastructure.Services
                 Configuration["AuthOptions:Audience"],
                 claims,
                 DateTime.Now,
-                DateTime.UtcNow.AddMinutes(1)
+                DateTime.UtcNow.AddMinutes(20)
                 );
 
             var token = new JwtSecurityToken(header, payload);
