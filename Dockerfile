@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:5.0-alpine3.13 AS build
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /app 
 #
 # copy csproj and restore as distinct layers
@@ -18,7 +18,9 @@ COPY RentACar.Infrastructure/. ./RentACar.Infrastructure/
 WORKDIR /app/RentACar.Api
 RUN dotnet publish -c Release -o out 
 #
-FROM mcr.microsoft.com/dotnet/aspnet:5.0-alpine3.13 AS runtime
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS runtime
 WORKDIR /app 
+ENV ASPNETCORE_URLS http://+:5000;https://+:5001
 COPY --from=build /app/RentACar.Api/out ./
 ENTRYPOINT ["dotnet", "RentACar.Api.dll"]
+

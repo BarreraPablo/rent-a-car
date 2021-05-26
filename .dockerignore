@@ -21,5 +21,6 @@
 **/obj
 **/secrets.dev.yaml
 **/values.dev.yaml
+RentACar.Api/appsettings.Development.json
 LICENSE
 README.md
