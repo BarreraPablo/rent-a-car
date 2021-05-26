@@ -158,6 +158,7 @@ function BodyType() {
     });
 
     const handleAdd = () => {
+        setCurrentPage(1);
         const newData = {
             id: -1,
             name: "",
@@ -166,6 +167,11 @@ function BodyType() {
         edit(newData);
         setData([newData, ...data]);
     };
+
+    const onPageChange = (page) => {
+        setCurrentPage(page);
+        cancel();
+    }
 
     return (
         <div className="site-card-border-less-wrapper">
@@ -192,7 +198,8 @@ function BodyType() {
                         columns={mergedColumns}
                         rowClassName="editable-row"
                         pagination={{
-                            onChange: cancel,
+                            onChange: onPageChange,
+                            current: currentPage,
                         }}
                     />
                 </Form>
