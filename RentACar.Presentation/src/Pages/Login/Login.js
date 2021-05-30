@@ -8,7 +8,13 @@ import "./Login.css";
 function Login() {
     return (
         <Row className="fullHeight" type="flex" justify="center" align="middle">
-            <Col>
+            <Col style={{marginTop: '-17vh'}}>
+                <Row type="flex" justify="center" align="middle" style={{marginBottom: '10px'}}>
+                    <Col>
+                        <img src={process.env.PUBLIC_URL +  "/rent-logo.png"} height="200" alt="Rent a car logo" />
+                    </Col>
+                </Row>
+
                 <LoginForm />
             </Col>
         </Row>
