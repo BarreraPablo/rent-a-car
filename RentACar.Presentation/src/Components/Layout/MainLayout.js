@@ -4,7 +4,7 @@ import {
     UserOutlined,
     SettingOutlined
 } from '@ant-design/icons';
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, Row } from 'antd';
 import { useState } from 'react';
 import { NavLink } from "react-router-dom";
 import { useAuth } from '../../Hooks/useAuth';
@@ -20,7 +20,6 @@ function MainLayout({children}) {
     const onCollapse = collapsed => {
         setCollapsed(collapsed);
     }
-    console.log('re redenrs main layout')
 
     return (
         <Layout style={{ minHeight: "100vh", backgroundColor: "red" }}>
@@ -29,7 +28,9 @@ function MainLayout({children}) {
                 collapsed={collapsed}
                 onCollapse={onCollapse}
             >
-                <div className="logo" />
+                    <div className="logo">
+                        <img src={process.env.PUBLIC_URL +  "/rent-horizontal-logo-gris.png"} width="165" alt="Rent a car logo" />
+                    </div>
                 <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
                     <Menu.Item key="1" icon={<CarOutlined />}>
                         <NavLink to="/cars">

@@ -1,3 +1,10 @@
 .background-layout-color {
     background-color: #ececec;
 }
+
+.logo {
+    height: 29px;
+    margin: 16px 16px 16px 16px;
+    overflow: hidden;
+}
+
