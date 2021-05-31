@@ -58,6 +58,7 @@ function LoginForm() {
                 >
                     <Form.Item
                         name="username"
+                        initialValue="Test"
                         rules={[
                             {
                                 required: true,
@@ -74,6 +75,7 @@ function LoginForm() {
                     </Form.Item>
                     <Form.Item
                         name="password"
+                        initialValue="123456"
                         rules={[
                             {
                                 required: true,
