@@ -30,6 +30,7 @@ namespace RentACar.Infrastructure.Extensions
         {
             services.Configure<PasswordOptions>(options => configuration.GetSection("PasswordOptions").Bind(options));
             services.Configure<ImageOptions>(options => configuration.GetSection("ImageOptions").Bind(options));
+            services.Configure<EmailOptions>(options => configuration.GetSection("EmailOptions").Bind(options));
 
             return services;
         }
@@ -41,6 +42,8 @@ namespace RentACar.Infrastructure.Extensions
             // Services - Singleton
             services.AddSingleton<IPasswordService, PasswordService>();
             services.AddSingleton<IFileService, FileService>();
+            services.AddSingleton<ICryptographyService, CryptographyService>();
+            services.AddSingleton<IEmailService, EmailService>();
 
 
             // Services - Scoped

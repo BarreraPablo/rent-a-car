@@ -17,6 +17,7 @@ namespace RentACar.Core.Entities
         public string Username { get; set; }
         public string EmailAddress { get; set; }
         public string Password { get; set; }
+        public string TokenRecovery { get; set; }
         public RoleType Role { get; set; }
         public virtual ICollection<Reservation> Reservation { get; set; }
         public virtual ICollection<RefreshToken> RefreshToken { get; set; }

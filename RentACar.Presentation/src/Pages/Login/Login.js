@@ -1,5 +1,6 @@
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Alert, Button, Card, Col, Form, Input, Row } from "antd";
+import Checkbox from "antd/lib/checkbox/Checkbox";
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "../../Hooks/useAuth";
@@ -8,10 +9,19 @@ import "./Login.css";
 function Login() {
     return (
         <Row className="fullHeight" type="flex" justify="center" align="middle">
-            <Col style={{marginTop: '-17vh'}}>
-                <Row type="flex" justify="center" align="middle" style={{marginBottom: '10px'}}>
+            <Col style={{ marginTop: "-17vh" }}>
+                <Row
+                    type="flex"
+                    justify="center"
+                    align="middle"
+                    style={{ marginBottom: "10px" }}
+                >
                     <Col>
-                        <img src={process.env.PUBLIC_URL +  "/rent-logo.png"} height="200" alt="Rent a car logo" />
+                        <img
+                            src={process.env.PUBLIC_URL + "/rent-logo.png"}
+                            height="200"
+                            alt="Rent a car logo"
+                        />
                     </Col>
                 </Row>
 
@@ -42,11 +52,7 @@ function LoginForm() {
         <>
             {message ? (
                 <>
-                    <Alert
-                        message={message}
-                        showIcon={false}
-                        type="error"
-                    />
+                    <Alert message={message} showIcon={false} type="error" />
                     <br />
                 </>
             ) : null}
@@ -91,8 +97,12 @@ function LoginForm() {
                             placeholder="Password"
                         />
                     </Form.Item>
-                    
-                        You do not have an account?  <Link to="./register">Register now</Link><br/>
+                    <Form.Item>
+                        You do not have an account?{" "}
+                        <Link to="./register">Register now</Link><br/>
+                        Forgot password?       {" "}
+                        <Link to="/passwordrecovery" classNname="login-form-forgot">Recover password</Link>
+                    </Form.Item>
                     <Form.Item className="no-bottom-margin">
                         <Button
                             block
@@ -100,7 +110,7 @@ function LoginForm() {
                             htmlType="submit"
                             className="login-form-button"
                             loading={loading}
-                        >
+                            >
                             {loading ? "Singing In" : "Sing In"}
                         </Button>
                     </Form.Item>

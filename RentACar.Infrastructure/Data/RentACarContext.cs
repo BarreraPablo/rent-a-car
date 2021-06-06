@@ -309,6 +309,10 @@ namespace RentACar.Infrastructure.Data
                     .HasMaxLength(100)
                     .IsUnicode(false);
 
+                entity.Property(e => e.TokenRecovery)
+                    .HasMaxLength(256)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Role)
                     .IsRequired()
                     .HasMaxLength(15)

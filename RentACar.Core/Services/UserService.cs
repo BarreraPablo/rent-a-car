@@ -52,5 +52,46 @@ namespace RentACar.Core.Services
             await unitOfWork.UserRepository.Add(user);
             await unitOfWork.SaveChangesAsync();
         }
+
+        public async Task SetTokenRecovery(string email, string tokenRecovery)
+        {
+            if(string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(tokenRecovery))
+            {
+                throw new ArgumentNotDefinedException();
+            }
+
+            User user = await unitOfWork.UserRepository.GetByEmail(email);
+
+            if(user == null)
+            {
+                throw new UserNotFoundException();
+            }
+
+            user.TokenRecovery = tokenRecovery;
+
+            await unitOfWork.UserRepository.Update(user);
+            await unitOfWork.SaveChangesAsync();
+        }
+
+        public async Task UpdatePasswordWithRecoveryToken(string recoveryToken, string newPassword)
+        {
+            if(string.IsNullOrWhiteSpace(recoveryToken) || string.IsNullOrWhiteSpace(newPassword))
+            {
+                throw new ArgumentNotDefinedException();
+            }
+
+            User user = await unitOfWork.UserRepository.GetByRecoveryToken(recoveryToken);
+
+            if (user == null)
+            {
+                throw new ExpiredRecoveryTokenException();
+            }
+
+            user.Password = newPassword;
+            user.TokenRecovery = null;
+
+            await unitOfWork.UserRepository.Update(user);
+            await unitOfWork.SaveChangesAsync();
+        }
     }
 }
