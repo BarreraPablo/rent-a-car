@@ -20,6 +20,7 @@ import PaymentType from "./Pages/PaymentTypes/PaymentType";
 import DocumentType from "./Pages/DocumentTypes/DocumentType";
 import RegisterForm from "./Pages/Register/Register";
 import PasswordRecovery from "./Pages/PasswordRecovery/PasswordRecovery";
+import PasswordReset from "./Pages/PasswordReset/PasswordReset";
 
 function App() {
     return (
@@ -41,6 +42,7 @@ function App() {
                 </PrivateRoute>
                 <Route exact path="/register" component={RegisterForm} />
                 <Route exact path="/passwordrecovery" component={PasswordRecovery} />
+                <Route exact path="/passwordreset/:recoveryToken" component={PasswordReset} />
                 <Route exact path={["/", "/login"]} component={Login} />
             </Router>
         </ProvideAuth>
