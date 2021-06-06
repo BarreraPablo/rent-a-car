@@ -13,6 +13,6 @@ namespace RentACar.Core.Interfaces
 
         public Task<User> GetByEmail(string email);
         public Task<User> GetByUsername(string username);
-
+        public Task<User> GetByRecoveryToken(string recoveryToken);
     }
 }

@@ -36,5 +36,14 @@ namespace RentACar.Infrastructure.Repositories
             return await entities.FirstOrDefaultAsync(u => u.EmailAddress == email);
         }
 
+        public async Task<User> GetByRecoveryToken(string recoveryToken)
+        {
+            if (string.IsNullOrWhiteSpace(recoveryToken))
+            {
+                throw new ArgumentNotDefinedException();
+            }
+
+            return await entities.FirstOrDefaultAsync(u => u.TokenRecovery == recoveryToken);
+        }
     }
 }
