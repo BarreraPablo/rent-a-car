@@ -19,6 +19,7 @@ import Brand from "./Pages/Brands/Brand";
 import PaymentType from "./Pages/PaymentTypes/PaymentType";
 import DocumentType from "./Pages/DocumentTypes/DocumentType";
 import RegisterForm from "./Pages/Register/Register";
+import PasswordRecovery from "./Pages/PasswordRecovery/PasswordRecovery";
 
 function App() {
     return (
@@ -39,6 +40,7 @@ function App() {
                     </MainLayout>
                 </PrivateRoute>
                 <Route exact path="/register" component={RegisterForm} />
+                <Route exact path="/passwordrecovery" component={PasswordRecovery} />
                 <Route exact path={["/", "/login"]} component={Login} />
             </Router>
         </ProvideAuth>
