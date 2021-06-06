@@ -8,5 +8,7 @@ namespace RentACar.Core.Interfaces
     {
         Task<User> GetByUsername(UserLoginReqDto userLogin);
         Task RegisterUser(User user);
+        Task SetTokenRecovery(string email, string tokenRecovery);
+        Task UpdatePasswordWithRecoveryToken(string recoveryToken, string newPassword);
     }
 }

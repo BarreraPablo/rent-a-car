@@ -30,3 +30,24 @@ export const register = (user) => {
         }
     });
 }
+
+export const startPasswordRecovery = (emailAddress) => {
+
+    return axios.post('user/startpasswordrecovery', {EmailAddress: emailAddress}).catch(err => {
+        message.error('An unexpected error ocurred');
+
+        return Promise.reject();
+    })
+}
+
+export const recoverPassword = (password, recoveryToken) => {
+
+    return axios.post('user/recoverpassword', {password: password, recoveryToken: recoveryToken}).catch(err => {
+        if(err.response.status === 400) {
+            return Promise.reject(err.response.data);
+        } 
+
+        message.error('An unexpected error ocurred')
+        return Promise.reject(null);
+    })
+}
