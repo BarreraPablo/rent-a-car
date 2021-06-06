@@ -41,6 +41,7 @@ namespace RentACar.Infrastructure.Extensions
             // Services - Singleton
             services.AddSingleton<IPasswordService, PasswordService>();
             services.AddSingleton<IFileService, FileService>();
+            services.AddSingleton<ICryptographyService, CryptographyService>();
             services.AddSingleton<IEmailService, EmailService>();
 
 
