@@ -30,6 +30,7 @@ namespace RentACar.Infrastructure.Extensions
         {
             services.Configure<PasswordOptions>(options => configuration.GetSection("PasswordOptions").Bind(options));
             services.Configure<ImageOptions>(options => configuration.GetSection("ImageOptions").Bind(options));
+            services.Configure<EmailOptions>(options => configuration.GetSection("EmailOptions").Bind(options));
 
             return services;
         }
