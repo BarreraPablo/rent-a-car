@@ -1,6 +1,5 @@
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Alert, Button, Card, Col, Form, Input, Row } from "antd";
-import Checkbox from "antd/lib/checkbox/Checkbox";
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "../../Hooks/useAuth";
