@@ -24,13 +24,15 @@ namespace RentACar.UnitTest
         {
             var userService = new Mock<IUserService>();
             var passwordService = new Mock<IPasswordService>();
+            var cryptographyService = new Mock<ICryptographyService>();
+            var emailService = new Mock<IEmailService>();
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile(new AutomapperProfile());
             });
             var mapper = config.CreateMapper();
 
-            var userController = new UserController(mapper, userService.Object, passwordService.Object);
+            var userController = new UserController(mapper, userService.Object, passwordService.Object, cryptographyService.Object, emailService.Object);
 
             var userCreateDto = new UserCreateDto
             {
