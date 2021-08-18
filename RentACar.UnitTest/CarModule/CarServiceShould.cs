@@ -1,23 +1,23 @@
-﻿using Moq;
-using RentACar.Core.Entities;
+﻿using RentACar.Core.Entities;
 using RentACar.Core.Exceptions;
 using RentACar.Core.Interfaces;
 using RentACar.Core.Services;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
+using Telerik.JustMock;
 using Xunit;
 
 namespace RentACar.UnitTest.CarModule
 {
     public class CarServiceShould
     {
-        Mock<IUnitOfWork> unitOfWork { get; set; }
+        IUnitOfWork unitOfWork { get; set; }
         CarService carService { get; set; }
         public CarServiceShould()
         {
-            unitOfWork = new Mock<IUnitOfWork>();
-            carService = new CarService(unitOfWork.Object);
+            unitOfWork = Mock.Create<IUnitOfWork>();
+            carService = new CarService(unitOfWork);
         }
 
         private Action<Car, Car> CheckAndUpdateRepositoryMock = (Car existingCar, Car updatedCar) => {
@@ -40,12 +40,11 @@ namespace RentACar.UnitTest.CarModule
                     new Car()
                 };
 
-
-            unitOfWork.Setup(m => m.CarRepository.GetAllWith(It.IsAny<bool>(), It.IsAny<bool>(), It.IsAny<bool>())).Returns(objectsList);
+            Mock.Arrange(() => unitOfWork.CarRepository.GetAllWith(Arg.IsAny<bool>(), Arg.IsAny<bool>(), Arg.IsAny<bool>())).Returns(objectsList);
 
             carService.GetAll(false);
 
-            unitOfWork.Verify(u => u.CarRepository.GetAllWith(It.IsAny<bool>(), It.IsAny<bool>(), It.IsAny<bool>()), Times.Once);
+            Mock.Assert(() => unitOfWork.CarRepository.GetAllWith(Arg.IsAny<bool>(), Arg.IsAny<bool>(), Arg.IsAny<bool>()), Occurs.Once());
         }
 
         [Fact]
@@ -57,14 +56,14 @@ namespace RentACar.UnitTest.CarModule
         [Fact]
         public async void Create_CarIsOk_CallsRepositoryAddMethod()
         {
-            unitOfWork.Setup(u => u.CarRepository.Add(It.IsAny<Car>()));
+            //Mock.Arrange(() => unitOfWork.CarRepository.Add(Arg.IsAny<Car>())).Returns(Task.FromResult((Car)null));
 
             var car = new Car();
 
             await carService.Create(car);
 
-            unitOfWork.Verify(u => u.CarRepository.Add(It.IsAny<Car>()), Times.Once);
-            unitOfWork.Verify(u => u.SaveChangesAsync(), Times.Once);
+            Mock.Assert(() => unitOfWork.CarRepository.Add(Arg.IsAny<Car>()), Occurs.Exactly(1));
+            Mock.Assert(() => unitOfWork.SaveChangesAsync(), Occurs.Once());
         }
 
         [Fact]
@@ -79,8 +78,8 @@ namespace RentACar.UnitTest.CarModule
             string existingImage = "existingImage.jpg";
             Car existingCar = new Car { Image = existingImage };
 
-            unitOfWork.Setup(u => u.CarRepository.GetById(It.IsAny<long>())).ReturnsAsync(existingCar);
-            unitOfWork.Setup(u => u.CarRepository.CheckAndUpdate(It.IsAny<Car>(), It.IsAny<Car>())).Callback(CheckAndUpdateRepositoryMock);
+            Mock.Arrange(() => unitOfWork.CarRepository.GetById(Arg.IsAny<long>())).TaskResult(existingCar);
+            Mock.Arrange(() => unitOfWork.CarRepository.CheckAndUpdate(Arg.IsAny<Car>(), Arg.IsAny<Car>())).DoInstead(CheckAndUpdateRepositoryMock).Returns(Task.FromResult((Car)null));
 
             var car = new Car { Image = null };
 
@@ -88,8 +87,8 @@ namespace RentACar.UnitTest.CarModule
             await carService.Update(car);
 
             Assert.Equal(existingImage, existingCar.Image);
-            unitOfWork.Verify(u => u.CarRepository.CheckAndUpdate(It.IsAny<Car>(), It.IsAny<Car>()), Times.Once);
-            unitOfWork.Verify(u => u.SaveChangesAsync(), Times.Once);
+            Mock.Assert(() => unitOfWork.CarRepository.CheckAndUpdate(Arg.IsAny<Car>(), Arg.IsAny<Car>()), Occurs.Once());
+            Mock.Assert(() => unitOfWork.SaveChangesAsync(), Occurs.Once());
         }
 
         [Fact]
@@ -100,16 +99,16 @@ namespace RentACar.UnitTest.CarModule
 
             Car existingCar = new Car { Image = existingImage };
 
-            unitOfWork.Setup(u => u.CarRepository.GetById(It.IsAny<long>())).ReturnsAsync(existingCar);
-            unitOfWork.Setup(u => u.CarRepository.CheckAndUpdate(It.IsAny<Car>(), It.IsAny<Car>())).Callback(CheckAndUpdateRepositoryMock);
+            Mock.Arrange(() => unitOfWork.CarRepository.GetById(Arg.IsAny<long>())).TaskResult(existingCar);
+            Mock.Arrange(() => unitOfWork.CarRepository.CheckAndUpdate(Arg.IsAny<Car>(), Arg.IsAny<Car>())).DoInstead(CheckAndUpdateRepositoryMock).Returns(Task.FromResult((Car)null));
 
             var car = new Car { Image = newImage };
 
             await carService.Update(car);
 
             Assert.Equal(newImage, existingCar.Image);
-            unitOfWork.Verify(u => u.CarRepository.CheckAndUpdate(It.IsAny<Car>(), It.IsAny<Car>()), Times.Once);
-            unitOfWork.Verify(u => u.SaveChangesAsync(), Times.Once);
+            Mock.Assert(() => unitOfWork.CarRepository.CheckAndUpdate(Arg.IsAny<Car>(), Arg.IsAny<Car>()), Occurs.Once());
+            Mock.Assert(() => unitOfWork.SaveChangesAsync(), Occurs.Once());
         }
 
         
@@ -118,12 +117,12 @@ namespace RentACar.UnitTest.CarModule
         [Fact]
         public async void Update_CarDoesNotExists_ThrowException()
         {
-            unitOfWork.Setup(u => u.CarRepository.GetById(It.IsAny<long>())).ReturnsAsync((Car)null);
+            Mock.Arrange(() => unitOfWork.CarRepository.GetById(Arg.IsAny<long>())).TaskResult((Car)null);
 
             var car = new Car();
 
             await Assert.ThrowsAsync<NullEntityException>(() => carService.Update(car));
-            unitOfWork.Verify(u => u.CarRepository.GetById(It.IsAny<long>()), Times.Once);
+            Mock.Assert(() => unitOfWork.CarRepository.GetById(Arg.IsAny<long>()), Occurs.Once());
         }
 
         //[Fact]
