@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Moq;
 using RentACar.Core.Entities;
 using RentACar.Core.Enumerations;
 using RentACar.Core.Exceptions;

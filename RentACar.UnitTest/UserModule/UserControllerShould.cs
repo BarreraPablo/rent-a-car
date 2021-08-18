@@ -1,12 +1,7 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Telerik.JustMock;
 using Xunit;
 using RentACar.Api.Controllers;
-using Moq;
 using RentACar.Core.Interfaces;
 using RentACar.Infrastructure.Interfaces;
 using RentACar.Core.DTOs.UserDTOs;
@@ -22,17 +17,17 @@ namespace RentACar.UnitTest
         [Fact]
         public async void Register_UserCreateDtoIsOk_HashPasswordAndRegisterUser()
         {
-            var userService = new Mock<IUserService>();
-            var passwordService = new Mock<IPasswordService>();
-            var cryptographyService = new Mock<ICryptographyService>();
-            var emailService = new Mock<IEmailService>();
+            var userService = Mock.Create<IUserService>();
+            var passwordService = Mock.Create<IPasswordService>();
+            var cryptographyService = Mock.Create<ICryptographyService>();
+            var emailService = Mock.Create<IEmailService>();
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile(new AutomapperProfile());
             });
             var mapper = config.CreateMapper();
 
-            var userController = new UserController(mapper, userService.Object, passwordService.Object, cryptographyService.Object, emailService.Object);
+            var userController = new UserController(mapper, userService, passwordService, cryptographyService, emailService);
 
             var userCreateDto = new UserCreateDto
             {
@@ -44,8 +39,8 @@ namespace RentACar.UnitTest
 
             var result = await userController.Register(userCreateDto);
 
-            passwordService.Verify(p => p.Hash(It.IsAny<string>()), Times.Once);
-            userService.Verify(u => u.RegisterUser(It.IsAny<User>()), Times.Once);
+            Mock.Assert(() => passwordService.Hash(Arg.AnyString), Occurs.Once());
+            Mock.Assert(() => userService.RegisterUser(Arg.IsAny<User>()), Occurs.Once());
 
             Assert.IsType<NoContentResult>(result);
         }

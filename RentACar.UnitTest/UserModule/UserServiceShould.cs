@@ -1,10 +1,11 @@
-﻿using Moq;
+﻿using Telerik.JustMock;
 using RentACar.Core.DTOs.UserDTOs;
 using RentACar.Core.Entities;
 using RentACar.Core.Exceptions;
 using RentACar.Core.Interfaces;
 using RentACar.Core.Services;
 using Xunit;
+using System.Threading.Tasks;
 
 namespace RentACar.UnitTest
 {
@@ -13,18 +14,19 @@ namespace RentACar.UnitTest
         [Fact]
         public async void RegisterUser_UserIsNull_ThrowException()
         {
-            var unitOfWorkMock = new Mock<IUnitOfWork>();
-            var userService = new UserService(unitOfWorkMock.Object);
+            var unitOfWorkMock = Mock.Create<IUnitOfWork>();
+            var userService = new UserService(unitOfWorkMock);
 
             await Assert.ThrowsAsync<ArgumentNotDefinedException>(() => userService.RegisterUser(null));
         }
 
         [Fact]
         public async void RegisterUser_UsernameIsTaken_ThrowException() {
-            var unitOfWorkMock = new Mock<IUnitOfWork>();
-            var userService = new UserService(unitOfWorkMock.Object);
+            var unitOfWorkMock = Mock.Create<IUnitOfWork>();
+            var userService = new UserService(unitOfWorkMock);
 
-            unitOfWorkMock.Setup(u => u.UserRepository.GetByUsername(It.IsAny<string>())).ReturnsAsync(new User() { });
+            Mock.Arrange(() => unitOfWorkMock.UserRepository.GetByUsername(Arg.AnyString)).TaskResult(new User() { });
+            //unitOfWorkMock.Setup(u => u.UserRepository.GetByUsername(It.IsAny<string>())).ReturnsAsync(new User() { });
 
             await Assert.ThrowsAsync<BussinessException>(() => userService.RegisterUser(new User() { }));
         }
@@ -32,10 +34,11 @@ namespace RentACar.UnitTest
         [Fact]
         public async void RegisterUser_EmailIsAlreadyRegistered_ThrowException()
         {
-            var unitOfWorkMock = new Mock<IUnitOfWork>();
-            var userService = new UserService(unitOfWorkMock.Object);
+            var unitOfWorkMock = Mock.Create<IUnitOfWork>();
+            var userService = new UserService(unitOfWorkMock);
 
-            unitOfWorkMock.Setup(u => u.UserRepository.GetByEmail(It.IsAny<string>())).ReturnsAsync(new User() { });
+            Mock.Arrange(() => unitOfWorkMock.UserRepository.GetByEmail(Arg.AnyString)).TaskResult(new User());
+            //unitOfWorkMock.Setup(u => u.UserRepository.GetByEmail(It.IsAny<string>())).ReturnsAsync(new User() { });
 
             await Assert.ThrowsAsync<BussinessException>(() => userService.RegisterUser(new User() { EmailAddress = "emailaddresstest@gmail.com" }));
         }
@@ -43,34 +46,37 @@ namespace RentACar.UnitTest
         [Fact]
         public async void RegisterUser_EmailIsNotRegisteredShouldCallTheAddMethodOnce()
         {
-            var unitOfWorkMock = new Mock<IUnitOfWork>();
-            var userService = new UserService(unitOfWorkMock.Object);
+            var unitOfWorkMock = Mock.Create<IUnitOfWork>();
+            var userService = new UserService(unitOfWorkMock);
 
-            unitOfWorkMock.Setup(u => u.UserRepository.GetByUsername(It.IsAny<string>())).ReturnsAsync((User)null);
-            unitOfWorkMock.Setup(u => u.UserRepository.GetByEmail(It.IsAny<string>())).ReturnsAsync((User)null);
+            Mock.Arrange(() => unitOfWorkMock.UserRepository.GetByUsername(Arg.AnyString)).TaskResult(null);
+            Mock.Arrange(() => unitOfWorkMock.UserRepository.GetByEmail(Arg.AnyString)).TaskResult(null);
 
-            await userService.RegisterUser(new User() { Id = 1, Username = "Test", Role = 0, Password = "123" });
+            await userService.RegisterUser(new User() { Id = 1, Username = "Test", Role = 0, Password = "123", EmailAddress = "test" });
 
-            unitOfWorkMock.Verify(u => u.UserRepository.Add(It.IsAny<User>()), Times.Once);
+            Mock.Assert(() => unitOfWorkMock.UserRepository.Add(Arg.IsAny<User>()), Occurs.Once());
+            //unitOfWorkMock.Verify(u => u.UserRepository.Add(It.IsAny<User>()), Times.Once);
         }
 
         [Fact]
         public async void GetByUsername_UsernameIsOk_CallGetByUsernameMethodOnce()
         {
-            var unitOfWorkMock = new Mock<IUnitOfWork>();
-            var userService = new UserService(unitOfWorkMock.Object);
-            unitOfWorkMock.Setup(u => u.UserRepository.GetByUsername(It.IsAny<string>())).ReturnsAsync(new User());
+            var unitOfWorkMock = Mock.Create<IUnitOfWork>();
+            var userService = new UserService(unitOfWorkMock);
+            Mock.Arrange(() => unitOfWorkMock.UserRepository.GetByUsername(Arg.AnyString)).TaskResult(new User());
+            //unitOfWorkMock.Setup(u => u.UserRepository.GetByUsername(It.IsAny<string>())).ReturnsAsync(new User());
 
             await userService.GetByUsername(new UserLoginReqDto() { });
 
-            unitOfWorkMock.Verify(u => u.UserRepository.GetByUsername(It.IsAny<string>()), Times.Once);
+            Mock.Assert(() => unitOfWorkMock.UserRepository.GetByUsername(Arg.AnyString), Occurs.Once());
+            //unitOfWorkMock.Verify(u => u.UserRepository.GetByUsername(It.IsAny<string>()), Times.Once);
         }
 
         [Fact]
         public async void GetByUsername_UserLoginIsNull_ThrowException()
         {
-            var unitOfWorkMock = new Mock<IUnitOfWork>();
-            var userService = new UserService(unitOfWorkMock.Object);
+            var unitOfWorkMock = Mock.Create<IUnitOfWork>();
+            var userService = new UserService(unitOfWorkMock);
 
             await Assert.ThrowsAsync<ArgumentNotDefinedException>(() => userService.GetByUsername(null));
         }
