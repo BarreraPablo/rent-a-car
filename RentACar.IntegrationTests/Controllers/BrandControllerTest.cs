@@ -21,16 +21,9 @@ namespace RentACar.IntegrationTests.Controllers
     public class BrandControllerTest
     {
         private CustomWebApplicationFactory<Startup> factory;
-
         private HttpClient httpClient { get; set; }
-
-        BrandCreateDto brandCreateDto = new BrandCreateDto
-        {
-            Name = $"Brand-Test-{DateTime.Now.Date}",
-            Description = "Description-test"
-        };
-
-        BrandReadDto brandReadDto = new BrandReadDto();
+        private BrandReadDto brandReadDto;
+        private string guid = new Guid().ToString();
 
         [OneTimeSetUp]
         public void SetupWebApplication()
@@ -44,6 +37,12 @@ namespace RentACar.IntegrationTests.Controllers
         [Test, Order(1)]
         public async Task Add_ReturnsOk()
         {
+            var brandCreateDto = new BrandCreateDto
+            {
+                Name = $"Brand-Test-{guid}",
+                Description = "Description-test"
+            };
+
             var response = await httpClient.PostAsJsonAsync("", brandCreateDto);
 
             Assert.AreEqual(System.Net.HttpStatusCode.NoContent, response.StatusCode);
@@ -54,10 +53,12 @@ namespace RentACar.IntegrationTests.Controllers
         {
             var brands = await httpClient.GetFromJsonAsync<IEnumerable<BrandReadDto>>("");
 
-            var brandFound = brands.Single(b => b.Name == $"Brand-Test-{DateTime.Now.Date}");
-            brandReadDto.Id = brandFound.Id;
-            brandReadDto.Name = $"Brand-Test-Updated-{DateTime.Now.Date}";
-            brandReadDto.Description = "Description-test-updated";
+            var brandFound = brands.Single(b => b.Name == $"Brand-Test-{guid}");
+            brandFound.Id = brandFound.Id;
+            brandFound.Name = $"Brand-Test-Updated-{DateTime.Now.Date}";
+            brandFound.Description = "Description-test-updated";
+
+            brandReadDto = brandFound;
 
             await httpClient.PutAsJsonAsync("", brandFound);
         }
@@ -72,14 +73,14 @@ namespace RentACar.IntegrationTests.Controllers
             // - Validates Content-Type includes content
             var response = await httpClient.GetFromJsonAsync<IEnumerable<BrandReadDto>>("");
 
-            Assert.True(response.Count() > 0);
+            Assert.True(response.Any());
             Assert.NotNull(response.Single(b => b.Id == brandReadDto.Id));
         }
 
         [OneTimeTearDown]
         public void TearDown()
         {
-            DbContextHelper.DeleteRange<Brand>(new List<Brand> { new Brand { Id = brandReadDto.Id } });
+            DbContextHelper.DeleteRange(new List<Brand> { new Brand { Id = brandReadDto.Id } });
 
             httpClient.Dispose();
             factory.Dispose();
