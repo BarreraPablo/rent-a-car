@@ -37,6 +37,8 @@ namespace RentACar.Infrastructure.Extensions
         
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
+            services.AddHealthChecks();
+
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             // Services - Singleton

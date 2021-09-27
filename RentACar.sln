@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACar.Infrastructure", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACar.UnitTest", "RentACar.UnitTest\RentACar.UnitTest.csproj", "{ABEFB436-F564-4FF5-AA7D-028E826E7C4F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACar.IntegrationTests", "RentACar.IntegrationTests\RentACar.IntegrationTests.csproj", "{860F3370-FD60-4EFC-8481-FE0D5B1877A1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,12 +37,17 @@ Global
 		{ABEFB436-F564-4FF5-AA7D-028E826E7C4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABEFB436-F564-4FF5-AA7D-028E826E7C4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ABEFB436-F564-4FF5-AA7D-028E826E7C4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{860F3370-FD60-4EFC-8481-FE0D5B1877A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{860F3370-FD60-4EFC-8481-FE0D5B1877A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{860F3370-FD60-4EFC-8481-FE0D5B1877A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{860F3370-FD60-4EFC-8481-FE0D5B1877A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{ABEFB436-F564-4FF5-AA7D-028E826E7C4F} = {FFA1070A-2265-4D24-A750-CCF652B777A5}
+		{860F3370-FD60-4EFC-8481-FE0D5B1877A1} = {FFA1070A-2265-4D24-A750-CCF652B777A5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5DEB09AF-FAB2-45E4-9C55-9AC87DC54228}
