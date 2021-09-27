@@ -39,12 +39,12 @@ namespace RentACar.Api.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(BrandCreateDto brandCreateDto)
+        public async Task<IActionResult> Add(BrandCreateDto brandCreateDto)
         {
 
             var brand = mapper.Map<Brand>(brandCreateDto);
 
-            brandService.Add(brand);
+            await brandService.Add(brand);
 
             return NoContent();
         }
