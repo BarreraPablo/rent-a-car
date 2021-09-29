@@ -43,8 +43,8 @@ namespace RentACar.Api.Controllers
             return NoContent();
         }
 
-        [HttpPut()]
-        public async Task<IActionResult> Delete(BodyTypeReadDto bodyTypeDto)
+        [HttpPut]
+        public async Task<IActionResult> Update(BodyTypeReadDto bodyTypeDto)
         {
             try
             {
