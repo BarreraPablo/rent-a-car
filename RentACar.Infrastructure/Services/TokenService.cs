@@ -68,7 +68,7 @@ namespace RentACar.Infrastructure.Services
         }
 
 
-        private string GenerateToken(User user)
+        public string GenerateToken(User user)
         {
             if (user == null)
             {

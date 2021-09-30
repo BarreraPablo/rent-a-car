@@ -7,11 +7,13 @@ using RentACar.Core.Interfaces;
 using RentACar.Core.Services;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RentACar.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class BodyTypeController : ControllerBase
     {
         private readonly IBodyTypeService bodyTypeService;
