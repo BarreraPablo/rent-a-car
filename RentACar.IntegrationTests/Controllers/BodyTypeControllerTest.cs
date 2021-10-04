@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using RentACar.Api;
 using RentACar.Core.DTOs.BodyTypeDTOs;
 using RentACar.Core.Entities;
 using RentACar.IntegrationTests.Helpers;
@@ -8,16 +7,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace RentACar.IntegrationTests.Controllers
 {
-    public class BodyTypeControllerTest
+    public class BodyTypeControllerTest : BaseIntegrationTest
     {
-        private CustomWebApplicationFactory<Startup> factory;
-        private HttpClient httpClient { get; set; }
         BodyTypeReadDto bodyTypeReadDto = new BodyTypeReadDto();
         private readonly string guid = Guid.NewGuid().ToString().Substring(0, 10);
 
@@ -25,9 +21,7 @@ namespace RentACar.IntegrationTests.Controllers
         [OneTimeSetUp]
         public void SetupWebApplication()
         {
-            factory = new CustomWebApplicationFactory<Startup>();
-            factory.ClientOptions.BaseAddress = new Uri("https://localhost/api/bodytype");
-            this.httpClient = factory.CreateClient();
+            httpClient.BaseAddress = new Uri("https://localhost/api/bodytype");
         }
 
         [Test, Order(-1)]

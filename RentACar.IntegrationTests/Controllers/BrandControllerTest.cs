@@ -1,37 +1,25 @@
-using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
-using RentACar.Api;
 using RentACar.Core.DTOs.BrandDTOs;
 using RentACar.Core.Entities;
-using RentACar.Infrastructure.Data;
+using RentACar.IntegrationTests.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using RentACar.IntegrationTests.Helpers;
 
 
 namespace RentACar.IntegrationTests.Controllers
 {
-    public class BrandControllerTest
+    public class BrandControllerTest : BaseIntegrationTest
     {
-        private CustomWebApplicationFactory<Startup> factory;
-        private HttpClient httpClient { get; set; }
         private BrandReadDto brandReadDto;
         private string guid = new Guid().ToString();
 
         [OneTimeSetUp]
         public void SetupWebApplication()
         {
-            factory = new CustomWebApplicationFactory<Startup>();
-            factory.ClientOptions.BaseAddress = new Uri("https://localhost/api/brand");
-            this.httpClient = factory.CreateClient();
-
+            httpClient.BaseAddress = new Uri("https://localhost/api/brand");
         }
 
         [Test, Order(1)]
