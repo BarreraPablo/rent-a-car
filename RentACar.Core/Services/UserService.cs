@@ -3,6 +3,7 @@ using RentACar.Core.Entities;
 using RentACar.Core.Exceptions;
 using RentACar.Core.Interfaces;
 using System.Threading.Tasks;
+using RentACar.Core.Enumerations;
 
 namespace RentACar.Core.Services
 {
@@ -48,6 +49,8 @@ namespace RentACar.Core.Services
                     throw new BussinessException("There is already an account with this email address");
                 }
             }
+
+            user.Role = RoleType.Consumer;
 
             await unitOfWork.UserRepository.Add(user);
             await unitOfWork.SaveChangesAsync();
